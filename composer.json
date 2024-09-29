@@ -1,0 +1,33 @@
+{
+    "name": "threadi/imgur-image-upload",
+	"version": "1.0.0",
+	"description": "Provides a Gutenberg block to upload an image to imgur via API.",
+	"type": "wordpress-plugin",
+	"scripts": {
+		"post-install-cmd": [
+			"\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/phpcsstandards/phpcsutils,vendor/phpcsstandards/phpcsextra"
+		],
+		"post-update-cmd": [
+			"\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/phpcsstandards/phpcsutils,vendor/phpcsstandards/phpcsextra"
+		]
+	},
+    "autoload": {
+        "psr-4": {
+            "ImgurImageUpload\\": "app/"
+        }
+    },
+	"require": {
+		"php": "^8.0",
+		"j0k3r/php-imgur-api-client": "^4.0",
+        "threadi/wp-easy-setup": "^1.2.2"
+	},
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^3.1.0"
+	},
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "platform-check": false
+    }
+}

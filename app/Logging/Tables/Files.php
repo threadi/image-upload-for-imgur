@@ -1,0 +1,235 @@
+<?php
+/**
+ * File for handling table of logs in this plugin.
+ *
+ * @package imgur-image-upload
+ */
+
+namespace ImgurImageUpload\Logging\Tables;
+
+// prevent direct access.
+defined( 'ABSPATH' ) || exit;
+
+use ImgurImageUpload\Logging\Log;
+use ImgurImageUpload\Plugin\Helper;
+use WP_List_Table;
+use WP_User;
+
+/**
+ * Handler for log-output in backend.
+ */
+class Files extends WP_List_Table {
+	/**
+	 * Override the parent columns method. Defines the columns to use in your listing table.
+	 *
+	 * @return array
+	 */
+	public function get_columns(): array {
+		return array(
+			'date'              => __( 'Date', 'imgur-image-upload' ),
+			'filename_original' => __( 'Filename original', 'imgur-image-upload' ),
+			'imgur_url'         => __( 'URL', 'imgur-image-upload' ),
+			'post_id'           => __( 'Uploaded in', 'imgur-image-upload' ),
+			'user_id'           => __( 'Uploaded by', 'imgur-image-upload' ),
+		);
+	}
+
+	/**
+	 * Get the table data
+	 *
+	 * @return array
+	 */
+	private function table_data(): array {
+		global $wpdb;
+
+		// order table.
+		$order_by = filter_input( INPUT_GET, 'orderby', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		if ( is_null( $order_by ) ) {
+			$order_by = 'date';
+		}
+		$order = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		if ( ! is_null( $order ) ) {
+			$order = sanitize_sql_orderby( $order );
+		} else {
+			$order = 'ASC';
+		}
+
+		// collect vars for statement.
+		$vars = array( 1 );
+
+		// collect restrictions.
+		$where = '';
+
+		// get results and return them.
+		if ( 'asc' === $order ) {
+			return $wpdb->get_results(
+				$wpdb->prepare(
+					'SELECT `time` AS `date`, `filename_original`, `imgur_url`, `post_id`, `user_id`
+            			FROM `' . $wpdb->prefix . 'imgur_image_upload_files`
+                        WHERE 1 = %d ' . $where . '
+                        ORDER BY ' . esc_sql( $order_by ) . ' ASC',
+					$vars
+				),
+				ARRAY_A
+			);
+		}
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				'SELECT `time` AS `date`, `filename_original`, `imgur_url`, `post_id`, `user_id`
+            			FROM `' . $wpdb->prefix . 'imgur_image_upload_files`
+                        WHERE 1 = %d ' . $where . '
+                        ORDER BY ' . esc_sql( $order_by ) . ' DESC',
+				$vars
+			),
+			ARRAY_A
+		);
+	}
+
+	/**
+	 * Get the log-table for the table-view.
+	 *
+	 * @return void
+	 */
+	public function prepare_items(): void {
+		$columns  = $this->get_columns();
+		$hidden   = $this->get_hidden_columns();
+		$sortable = $this->get_sortable_columns();
+
+		$data = $this->table_data();
+
+		$per_page     = 100;
+		$current_page = $this->get_pagenum();
+		$total_items  = count( $data );
+
+		$this->set_pagination_args(
+			array(
+				'total_items' => $total_items,
+				'per_page'    => $per_page,
+			)
+		);
+
+		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
+
+		$this->_column_headers = array( $columns, $hidden, $sortable );
+		$this->items           = $data;
+	}
+
+	/**
+	 * Define which columns are hidden
+	 *
+	 * @return array
+	 */
+	public function get_hidden_columns(): array {
+		return array();
+	}
+
+	/**
+	 * Define the sortable columns
+	 *
+	 * @return array
+	 */
+	public function get_sortable_columns(): array {
+		return array( 'date' => array( 'date', false ) );
+	}
+
+	/**
+	 * Define what data to show on each column of the table
+	 *
+	 * @param  array  $item        Data.
+	 * @param  String $column_name - Current column name.
+	 *
+	 * @return string
+	 */
+	public function column_default( $item, $column_name ): string {
+		return match ( $column_name ) {
+			'date' => Helper::get_format_date_time( $item[ $column_name ] ),
+			'filename_original' => $item[ $column_name ],
+			'imgur_url' => $this->show_link( $item[ $column_name ] ),
+			'post_id' => $this->show_post( absint( $item[ $column_name ] ) ),
+			'user_id' => $this->show_user( $item[ $column_name ] ),
+			default => '',
+		};
+	}
+
+	/**
+	 * Message to be displayed when there are no items.
+	 *
+	 * @since 1.0.0
+	 */
+	public function no_items(): void {
+		// get actual filter.
+		$category = $this->get_category_filter();
+
+		// if filter is set show other text.
+		if ( ! empty( $category ) ) {
+			// get all categories to get the title.
+			$categories = Log::get_instance()->get_categories();
+
+			// show text.
+			/* translators: %1$s will be replaced by the category name. */
+			printf( esc_html__( 'No files for %1$s found.', 'imgur-image-upload' ), esc_html( $categories[ $category ] ) );
+			return;
+		}
+
+		// show default text.
+		echo esc_html__( 'No files found.', 'imgur-image-upload' );
+	}
+
+	/**
+	 * Show given string as link.
+	 *
+	 * @param string $column_name The given string.
+	 *
+	 * @return string
+	 */
+	private function show_link( string $column_name ): string {
+		// bail if no link is given.
+		if ( empty( $column_name ) ) {
+			return '';
+		}
+
+		// show link.
+		return '<a href="' . esc_url( $column_name ) . '" target="_blank">' . esc_url( $column_name ) . '</a>';
+	}
+
+	/**
+	 * Show linked name of given post.
+	 *
+	 * @param int $post_id The post ID.
+	 *
+	 * @return string
+	 */
+	private function show_post( int $post_id ): string {
+		// bail if no id is given.
+		if ( 0 === $post_id ) {
+			return '<i>' . __( 'Unknown', 'imgur-image-upload' ) . '</i>';
+		}
+
+		// return the linked post title.
+		return '<a href="' . esc_url( get_permalink( $post_id ) ) . '" target="_blank">' . esc_html( get_post_field( 'post_title', $post_id ) ) . '</a>';
+	}
+
+	/**
+	 * Show linked name of given user.
+	 *
+	 * @param int $user_id The user ID.
+	 *
+	 * @return string
+	 */
+	private function show_user( int $user_id ): string {
+		// bail if no id is given.
+		if ( 0 === $user_id ) {
+			return '<i>' . __( 'Unknown', 'imgur-image-upload' ) . '</i>';
+		}
+
+		// get the user.
+		$user      = get_user_by( 'ID', $user_id );
+		$user_name = '';
+		if ( $user instanceof WP_User ) {
+			$user_name = $user->display_name;
+		}
+
+		// return the linked username.
+		return '<a href="' . esc_url( get_edit_user_link( $user_id ) ) . '" target="_blank">' . esc_html( $user_name ) . '</a>';
+	}
+}
