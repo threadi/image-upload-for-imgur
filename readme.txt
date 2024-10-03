@@ -1,5 +1,5 @@
 === Imgur Image Upload ===
-Contributors:, threadi
+Contributors: threadi
 Tags: imgur, upload, image
 Requires at least: 5.9
 Tested up to: 6.6
@@ -13,6 +13,10 @@ Upload images in Block Editor directly to imgur.
 == Description ==
 
 Upload images in Block Editor directly to imgur. You need API credentials from imgur to use this plugin.
+
+= Repository =
+
+The development repository is on [GitHub](https://github.com/threadi/imgur-image-upload).
 
 ---
 
