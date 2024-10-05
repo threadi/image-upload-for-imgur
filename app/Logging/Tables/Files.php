@@ -2,7 +2,7 @@
 /**
  * File for handling table of logs in this plugin.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Logging\Tables;
@@ -26,11 +26,11 @@ class Files extends WP_List_Table {
 	 */
 	public function get_columns(): array {
 		return array(
-			'date'              => __( 'Date', 'imgur-image-upload' ),
-			'filename_original' => __( 'Filename original', 'imgur-image-upload' ),
-			'imgur_url'         => __( 'URL', 'imgur-image-upload' ),
-			'post_id'           => __( 'Uploaded in', 'imgur-image-upload' ),
-			'user_id'           => __( 'Uploaded by', 'imgur-image-upload' ),
+			'date'              => __( 'Date', 'image-upload-for-imgur' ),
+			'filename_original' => __( 'Filename original', 'image-upload-for-imgur' ),
+			'imgur_url'         => __( 'URL', 'image-upload-for-imgur' ),
+			'post_id'           => __( 'Uploaded in', 'image-upload-for-imgur' ),
+			'user_id'           => __( 'Uploaded by', 'image-upload-for-imgur' ),
 		);
 	}
 
@@ -167,12 +167,12 @@ class Files extends WP_List_Table {
 
 			// show text.
 			/* translators: %1$s will be replaced by the category name. */
-			printf( esc_html__( 'No files for %1$s found.', 'imgur-image-upload' ), esc_html( $categories[ $category ] ) );
+			printf( esc_html__( 'No files for %1$s found.', 'image-upload-for-imgur' ), esc_html( $categories[ $category ] ) );
 			return;
 		}
 
 		// show default text.
-		echo esc_html__( 'No files found.', 'imgur-image-upload' );
+		echo esc_html__( 'No files found.', 'image-upload-for-imgur' );
 	}
 
 	/**
@@ -202,7 +202,7 @@ class Files extends WP_List_Table {
 	private function show_post( int $post_id ): string {
 		// bail if no id is given.
 		if ( 0 === $post_id ) {
-			return '<i>' . __( 'Unknown', 'imgur-image-upload' ) . '</i>';
+			return '<i>' . __( 'Unknown', 'image-upload-for-imgur' ) . '</i>';
 		}
 
 		// return the linked post title.
@@ -219,7 +219,7 @@ class Files extends WP_List_Table {
 	private function show_user( int $user_id ): string {
 		// bail if no id is given.
 		if ( 0 === $user_id ) {
-			return '<i>' . __( 'Unknown', 'imgur-image-upload' ) . '</i>';
+			return '<i>' . __( 'Unknown', 'image-upload-for-imgur' ) . '</i>';
 		}
 
 		// get the user.

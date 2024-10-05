@@ -1,5 +1,5 @@
 # Plugin-Slug
-plugin.slug=imgur-image-upload
+plugin.slug=image-upload-for-imgur
 
 # version number to use
 plugin.version=

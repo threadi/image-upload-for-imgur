@@ -2,7 +2,7 @@
 /**
  * File with general helper tasks for the plugin.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Plugin;
@@ -24,7 +24,7 @@ class Helper {
 	 * @return string
 	 */
 	public static function get_plugin_url(): string {
-		return trailingslashit( plugin_dir_url( IMGUR_IMAGE_UPLOAD_PLUGIN ) );
+		return trailingslashit( plugin_dir_url( IMAGE_UPLOAD_FOR_IMGUR_PLUGIN ) );
 	}
 
 	/**
@@ -33,7 +33,7 @@ class Helper {
 	 * @return string
 	 */
 	public static function get_plugin_path(): string {
-		return trailingslashit( plugin_dir_path( IMGUR_IMAGE_UPLOAD_PLUGIN ) );
+		return trailingslashit( plugin_dir_path( IMAGE_UPLOAD_FOR_IMGUR_PLUGIN ) );
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Helper {
 	 * @return string
 	 */
 	public static function get_plugin_support_url(): string {
-		return 'https://wordpress.org/support/plugin/imgur-image-upload/';
+		return 'https://wordpress.org/support/plugin/image-upload-for-imgur/';
 	}
 
 	/**
@@ -60,7 +60,7 @@ class Helper {
 	 * @return string
 	 */
 	public static function get_plugin_name(): string {
-		$plugin_data = get_plugin_data( IMGUR_IMAGE_UPLOAD_PLUGIN );
+		$plugin_data = get_plugin_data( IMAGE_UPLOAD_FOR_IMGUR_PLUGIN );
 		if ( ! empty( $plugin_data ) && ! empty( $plugin_data['Name'] ) ) {
 			return $plugin_data['Name'];
 		}
@@ -219,7 +219,7 @@ class Helper {
 			return filemtime( $filepath );
 		}
 
-		$plugin_version = IMGUR_IMAGE_UPLOAD_PLUGIN_VERSION;
+		$plugin_version = IMAGE_UPLOAD_FOR_IMGUR_PLUGIN_VERSION;
 
 		/**
 		 * Filter the used file version (for JS- and CSS-files which get enqueued).
@@ -238,7 +238,7 @@ class Helper {
 	 * @return string
 	 */
 	public static function get_review_url(): string {
-		return 'https://wordpress.org/plugins/imgur-image-upload/#reviews';
+		return 'https://wordpress.org/plugins/image-upload-for-imgur/#reviews';
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * File to handle a single select field for classic settings.
  *
- * @package imgur-image-uploads
+ * @package image-upload-for-imgurs
  */
 
 namespace ImgurImageUpload\Plugin\Fields;
@@ -52,7 +52,7 @@ class Select {
 									echo esc_attr( $attributes['fieldId'] );
 									echo isset( $attributes['multiple'] ) && false !== $attributes['multiple'] ? '[]' : '';
 									?>
-			" class="imgur-image-upload-field-width" title="<?php echo esc_attr( $title ); ?>"<?php echo isset( $attributes['readonly'] ) && false !== $attributes['readonly'] ? ' disabled="disabled"' : ''; ?><?php echo isset( $attributes['multiple'] ) && false !== $attributes['multiple'] ? ' multiple="multiple"' : ''; ?> data-depends="<?php echo esc_attr( wp_json_encode( $attributes['depends'] ) ); ?>">
+			" class="image-upload-for-imgur-field-width" title="<?php echo esc_attr( $title ); ?>"<?php echo isset( $attributes['readonly'] ) && false !== $attributes['readonly'] ? ' disabled="disabled"' : ''; ?><?php echo isset( $attributes['multiple'] ) && false !== $attributes['multiple'] ? ' multiple="multiple"' : ''; ?> data-depends="<?php echo esc_attr( wp_json_encode( $attributes['depends'] ) ); ?>">
 				<?php
 				if ( false === $attributes['hide_empty_option'] ) {
 					?>

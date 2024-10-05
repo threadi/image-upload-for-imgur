@@ -2,7 +2,7 @@
 /**
  * File to handle a single text field for classic settings.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Plugin\Fields;

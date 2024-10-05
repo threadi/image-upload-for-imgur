@@ -2,7 +2,7 @@
 /**
  * File to handle plugin-settings.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Plugin;
@@ -91,28 +91,28 @@ class Settings {
 		// set tabs.
 		$this->tabs = array(
 			array(
-				'label'         => __( 'Basic Settings', 'imgur-image-upload' ),
+				'label'         => __( 'Basic Settings', 'image-upload-for-imgur' ),
 				'key'           => '',
 				'settings_page' => 'imgur_image_upload_settings',
 				'page'          => 'imgur_image_upload_settings',
 				'order'         => 10,
 			),
 			array(
-				'label'         => __( 'Advanced Settings', 'imgur-image-upload' ),
+				'label'         => __( 'Advanced Settings', 'image-upload-for-imgur' ),
 				'key'           => 'advanced',
 				'settings_page' => 'imgur_image_upload_settings_advanced',
 				'page'          => 'imgur_image_upload_settings',
 				'order'         => 20,
 			),
 			array(
-				'label'    => __( 'Logs', 'imgur-image-upload' ),
+				'label'    => __( 'Logs', 'image-upload-for-imgur' ),
 				'key'      => 'logs',
 				'callback' => array( $this, 'show_log' ),
 				'page'     => 'imgur_image_upload_settings',
 				'order'    => 900,
 			),
 			array(
-				'label'      => __( 'Questions? Check our forum!', 'imgur-image-upload' ),
+				'label'      => __( 'Questions? Check our forum!', 'image-upload-for-imgur' ),
 				'key'        => 'help',
 				'url'        => Helper::get_plugin_support_url(),
 				'url_target' => '_blank',
@@ -132,13 +132,13 @@ class Settings {
 		// define settings for this plugin.
 		$this->settings = array(
 			'settings_section_main'     => array(
-				'label'         => __( 'General Settings', 'imgur-image-upload' ),
+				'label'         => __( 'General Settings', 'image-upload-for-imgur' ),
 				'settings_page' => 'imgur_image_upload_settings',
 				'callback'      => '__return_true',
 				'fields'        => array(
 					'imgur_api_client_id'     => array(
-						'label'               => __( 'Imgur API Client ID', 'imgur-image-upload' ),
-						'description'         => __( 'Create a new API client ID and secret <a href="https://api.imgur.com/oauth2/addclient" target="_blank">here (opens new window)</a>. Choose "OAuth 2 authorization without a callback URL" in the form.<br>Alternative you could use <a href="https://imgur.com/account/settings/apps" target="_blank">one of your existing keys (opens new window)</a>.', 'imgur-image-upload' ),
+						'label'               => __( 'Imgur API Client ID', 'image-upload-for-imgur' ),
+						'description'         => __( 'Create a new API client ID and secret <a href="https://api.imgur.com/oauth2/addclient" target="_blank">here (opens new window)</a>. Choose "OAuth 2 authorization without a callback URL" in the form.<br>Alternative you could use <a href="https://imgur.com/account/settings/apps" target="_blank">one of your existing keys (opens new window)</a>.', 'image-upload-for-imgur' ),
 						'field'               => array( 'ImgurImageUpload\Plugin\Fields\Text', 'get' ),
 						'required'            => true,
 						'register_attributes' => array(
@@ -150,7 +150,7 @@ class Settings {
 						'callback'            => array( $this, 'check_credentials' ),
 					),
 					'imgur_api_client_secret' => array(
-						'label'               => __( 'Imgur API Client Secret', 'imgur-image-upload' ),
+						'label'               => __( 'Imgur API Client Secret', 'image-upload-for-imgur' ),
 						'field'               => array( 'ImgurImageUpload\Plugin\Fields\Text', 'get' ),
 						'required'            => true,
 						'register_attributes' => array(
@@ -164,12 +164,12 @@ class Settings {
 				),
 			),
 			'settings_section_advanced' => array(
-				'label'         => __( 'Advanced Settings', 'imgur-image-upload' ),
+				'label'         => __( 'Advanced Settings', 'image-upload-for-imgur' ),
 				'settings_page' => 'imgur_image_upload_settings_advanced',
 				'callback'      => '__return_true',
 				'fields'        => array(
 					'imgur_allow_multiple_files' => array(
-						'label'               => __( 'Allow multiple files per Block', 'imgur-image-upload' ),
+						'label'               => __( 'Allow multiple files per Block', 'image-upload-for-imgur' ),
 						'field'               => array( 'ImgurImageUpload\Plugin\Fields\Checkbox', 'get' ),
 						'required'            => true,
 						'register_attributes' => array(
@@ -179,7 +179,7 @@ class Settings {
 						),
 					),
 					'imgur_file_types'           => array(
-						'label'               => __( 'Choose allowed file types', 'imgur-image-upload' ),
+						'label'               => __( 'Choose allowed file types', 'image-upload-for-imgur' ),
 						'field'               => array( 'ImgurImageUpload\Plugin\Fields\Select', 'get' ),
 						'options'             => $file_types_array,
 						'hide_empty_option'   => true,
@@ -201,7 +201,7 @@ class Settings {
 						'callback'            => array( $this, 'check_file_types' ),
 					),
 					'imgur_log_files'            => array(
-						'label'               => __( 'Log all uploaded files', 'imgur-image-upload' ),
+						'label'               => __( 'Log all uploaded files', 'image-upload-for-imgur' ),
 						'field'               => array( 'ImgurImageUpload\Plugin\Fields\Checkbox', 'get' ),
 						'required'            => true,
 						'register_attributes' => array(
@@ -216,7 +216,7 @@ class Settings {
 		// add file list, if enabled.
 		if ( 1 === absint( get_option( 'imgur_log_files' ) ) ) {
 			$this->tabs[] = array(
-				'label'    => __( 'Files', 'imgur-image-upload' ),
+				'label'    => __( 'Files', 'image-upload-for-imgur' ),
 				'key'      => 'files',
 				'callback' => array( $this, 'show_files' ),
 				'page'     => 'imgur_image_upload_settings',
@@ -329,8 +329,8 @@ class Settings {
 	public function add_settings_menu(): void {
 		// add our settings-page in menu.
 		add_options_page(
-			__( 'Imgur Image Upload Settings', 'imgur-image-upload' ),
-			__( 'Imgur Image Upload Settings', 'imgur-image-upload' ),
+			__( 'Image Upload for Imgur Settings', 'image-upload-for-imgur' ),
+			__( 'Image Upload for Imgur Settings', 'image-upload-for-imgur' ),
 			'manage_options',
 			'imgur_image_upload_settings',
 			array( $this, 'add_settings_content' ),
@@ -425,7 +425,7 @@ class Settings {
 			<?php
 			if ( ! empty( $page ) ) {
 				?>
-					<form method="post" action="<?php echo esc_url( get_admin_url() ); ?>options.php" class="imgur-image-upload-settings">
+					<form method="post" action="<?php echo esc_url( get_admin_url() ); ?>options.php" class="image-upload-for-imgur-settings">
 					<?php
 					settings_fields( $page );
 					do_settings_sections( $page );
@@ -577,7 +577,7 @@ class Settings {
 			$log->prepare_items();
 			?>
 			<div class="wrap">
-				<h2><?php echo esc_html__( 'Logs', 'imgur-image-upload' ); ?></h2>
+				<h2><?php echo esc_html__( 'Logs', 'image-upload-for-imgur' ); ?></h2>
 				<?php
 				$log->views();
 				$log->display();
@@ -610,7 +610,7 @@ class Settings {
 		if ( empty( $upload_result['link'] ) ) {
 			$transient_obj = Transients::get_instance()->add();
 			$transient_obj->set_name( 'imgur_image_upload_credential_error' );
-			$transient_obj->set_message( __( '<strong>Error during test of your API credentials</strong> Please check your entered API key and credential.', 'imgur-image-upload' ) );
+			$transient_obj->set_message( __( '<strong>Error during test of your API credentials</strong> Please check your entered API key and credential.', 'image-upload-for-imgur' ) );
 			$transient_obj->set_type( 'error' );
 			$transient_obj->save();
 		}
@@ -645,7 +645,7 @@ class Settings {
 			$log->prepare_items();
 			?>
 			<div class="wrap">
-				<h2><?php echo esc_html__( 'Uploaded files', 'imgur-image-upload' ); ?></h2>
+				<h2><?php echo esc_html__( 'Uploaded files', 'image-upload-for-imgur' ); ?></h2>
 				<?php
 				$log->views();
 				$log->display();

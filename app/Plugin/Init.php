@@ -2,7 +2,7 @@
 /**
  * File to handle initialization of this plugin.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Plugin;
@@ -79,7 +79,7 @@ class Init {
 		add_action( 'cli_init', array( $this, 'register_cli' ) );
 
 		// misc.
-		add_filter( 'plugin_action_links_' . plugin_basename( IMGUR_IMAGE_UPLOAD_PLUGIN ), array( $this, 'add_setting_link_for_plugin' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( IMAGE_UPLOAD_FOR_IMGUR_PLUGIN ), array( $this, 'add_setting_link_for_plugin' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_styles_and_js' ), PHP_INT_MAX );
 	}
 
@@ -95,7 +95,7 @@ class Init {
 		}
 
 		// embed the block.
-		register_block_type( dirname( IMGUR_IMAGE_UPLOAD_PLUGIN ) );
+		register_block_type( dirname( IMAGE_UPLOAD_FOR_IMGUR_PLUGIN ) );
 	}
 
 	/**
@@ -107,7 +107,7 @@ class Init {
 	 */
 	public function add_setting_link_for_plugin( array $links ): array {
 		// adds the link to for settings.
-		$links[] = "<a href='" . esc_url( Helper::get_settings_url() ) . "'>" . __( 'Settings', 'imgur-image-upload' ) . '</a>';
+		$links[] = "<a href='" . esc_url( Helper::get_settings_url() ) . "'>" . __( 'Settings', 'image-upload-for-imgur' ) . '</a>';
 
 		// return resulting links.
 		return $links;
@@ -130,7 +130,7 @@ class Init {
 	public function add_styles_and_js(): void {
 		// admin-specific styles.
 		wp_enqueue_style(
-			'imgur-image-upload',
+			'image-upload-for-imgur',
 			Helper::get_plugin_url() . 'admin/styles.css',
 			array(),
 			Helper::get_file_version( Helper::get_plugin_path() . 'admin/styles.css' ),
@@ -138,7 +138,7 @@ class Init {
 
 		// backend-JS.
 		wp_enqueue_script(
-			'imgur-image-upload',
+			'image-upload-for-imgur',
 			Helper::get_plugin_url() . 'admin/js.js',
 			array( 'jquery' ),
 			Helper::get_file_version( Helper::get_plugin_path() . 'admin/js.js' ),
@@ -147,11 +147,11 @@ class Init {
 
 		// add php-vars to our js-script.
 		wp_localize_script(
-			'imgur-image-upload',
+			'image-upload-for-imgur',
 			'imgurImageUploadJsVars',
 			array(
 				'review_url'    => Helper::get_review_url(),
-				'title_rate_us' => __( 'Rate us!', 'imgur-image-upload' ),
+				'title_rate_us' => __( 'Rate us!', 'image-upload-for-imgur' ),
 			)
 		);
 	}

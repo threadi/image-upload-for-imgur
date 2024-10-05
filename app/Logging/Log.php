@@ -2,7 +2,7 @@
 /**
  * File for handling logging in this plugin.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Logging;
@@ -137,7 +137,7 @@ class Log {
 		global $wpdb;
 
 		// check the nonce.
-		check_admin_referer( 'imgur-image-upload-log-empty', 'nonce' );
+		check_admin_referer( 'image-upload-for-imgur-log-empty', 'nonce' );
 
 		// empty the table.
 		$wpdb->query( 'TRUNCATE TABLE `' . $wpdb->prefix . 'imgur_image_upload_logs`' );
@@ -154,7 +154,7 @@ class Log {
 	 */
 	public function get_categories(): array {
 		$list = array(
-			'system' => __( 'System', 'imgur-image-upload' ),
+			'system' => __( 'System', 'image-upload-for-imgur' ),
 		);
 
 		/**

@@ -81,7 +81,7 @@ export default function Edit( object ) {
        * Send form data.
        */
 			await apiFetch({
-				path: "imgur-image-upload/v1/files",
+				path: "image-upload-for-imgur/v1/files",
 				method: "POST",
 				body: formData,
 			}).then((response) => {
@@ -125,14 +125,14 @@ export default function Edit( object ) {
    * @param error
    */
   function setError( error ) {
-    object.setAttributes( { error: __( 'An error occurred:', 'imgur-image-upload' ) + ' ' + error } );
+    object.setAttributes( { error: __( 'An error occurred:', 'image-upload-for-imgur' ) + ' ' + error } );
   }
 
   /**
    * Add custom class to our wrapper for styling.
    */
   const blockProps = useBlockProps( {
-    className: 'imgur-image-upload-wrapper',
+    className: 'image-upload-for-imgur-wrapper',
   } );
 
 	/**
@@ -148,7 +148,7 @@ export default function Edit( object ) {
 					onChange={(event) => {handleImagesUpload(event.target.files) }	}
           className={"button"}
 				>
-					{__( 'Choose files to upload', 'imgur-image-upload' )}
+					{__( 'Choose files to upload', 'image-upload-for-imgur' )}
 				</FormFileUpload>
 			}
       {! object.attributes.spinner && object.attributes.error.length > 0 && <p className={"error"}>{object.attributes.error}</p>}

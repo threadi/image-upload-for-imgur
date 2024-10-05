@@ -2,7 +2,7 @@
 /**
  * This file contains the handling of a single transient for this plugin in wp-admin.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Plugin;
@@ -186,15 +186,15 @@ class Transient {
 		// output, if message is given.
 		if ( $this->has_message() ) {
 			?>
-			<div class="imgur-image-upload-transient updated <?php echo esc_attr( $this->get_type() ); ?>" data-dismissible="<?php echo esc_attr( $this->get_name() ); ?>-<?php echo absint( $this->get_dismissible_days() ); ?>">
+			<div class="image-upload-for-imgur-transient updated <?php echo esc_attr( $this->get_type() ); ?>" data-dismissible="<?php echo esc_attr( $this->get_name() ); ?>-<?php echo absint( $this->get_dismissible_days() ); ?>">
 				<h3><?php echo wp_kses_post( Helper::get_logo_img() ); ?> <?php echo esc_html( Helper::get_plugin_name() ); ?></h3>
 				<?php
 				echo wp_kses_post( wpautop( $this->get_message() ) );
 				if ( $this->get_dismissible_days() > 0 ) {
 					/* translators: %1$d will be replaced by the days this message will be hidden. */
-					$title = sprintf( __( 'Hide this message for %1$d days.', 'imgur-image-upload' ), $this->get_dismissible_days() );
+					$title = sprintf( __( 'Hide this message for %1$d days.', 'image-upload-for-imgur' ), $this->get_dismissible_days() );
 					?>
-					<button type="button" class="notice-dismiss" title="<?php echo esc_html( $title ); ?>"><?php echo esc_html__( 'Dismiss', 'imgur-image-upload' ); ?><span class="screen-reader-text"><?php echo esc_html( $title ); ?></span></button>
+					<button type="button" class="notice-dismiss" title="<?php echo esc_html( $title ); ?>"><?php echo esc_html__( 'Dismiss', 'image-upload-for-imgur' ); ?><span class="screen-reader-text"><?php echo esc_html( $title ); ?></span></button>
 					<?php
 				}
 				?>

@@ -2,7 +2,7 @@
 /**
  * File for handling file logging in this plugin.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Logging;
