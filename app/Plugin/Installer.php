@@ -2,7 +2,7 @@
 /**
  * File to handle the installation and activation of this plugin
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Plugin;

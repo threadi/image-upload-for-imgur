@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="imgur-image-upload" basedir="." default="help">
+<project name="image-upload-for-imgur" basedir="." default="help">
 
     <!-- Include config file containing  -->
     <loadproperties srcFile="build.properties" />

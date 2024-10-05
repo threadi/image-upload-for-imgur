@@ -2,7 +2,7 @@
 /**
  * File to handle a single checkbox for classic settings.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Plugin\Fields;
@@ -47,7 +47,7 @@ class Checkbox {
 				echo ( 1 === absint( get_option( $attributes['fieldId'] ) ) || 1 === absint( filter_input( INPUT_GET, $attributes['fieldId'], FILTER_SANITIZE_NUMBER_INT ) ) ) ? ' checked="checked"' : '';
 				?>
 				<?php echo esc_attr( $readonly ); ?>
-					class="imgur-image-upload-field-width"
+					class="image-upload-for-imgur-field-width"
 					title="<?php echo esc_attr( $title ); ?>" data-depends="<?php echo esc_attr( wp_json_encode( $attributes['depends'] ) ); ?>"
 			>
 			<?php

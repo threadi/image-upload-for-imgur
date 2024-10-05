@@ -2,7 +2,7 @@
 /**
  * This file contains the handling of transients for this plugin in wp-admin.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Plugin;
@@ -95,7 +95,7 @@ class Transients {
 		$transients = array();
 
 		// get list of our own transients from DB as array.
-		$transients_from_db = get_option( 'imgur-image-upload-transients', array() );
+		$transients_from_db = get_option( 'image-upload-for-imgur-transients', array() );
 		if ( ! is_array( $transients_from_db ) ) {
 			$transients_from_db = array();
 		}
@@ -151,7 +151,7 @@ class Transients {
 		}
 
 		// update the transients-list in db.
-		update_option( 'imgur-image-upload-transients', $transients_in_db );
+		update_option( 'image-upload-for-imgur-transients', $transients_in_db );
 	}
 
 	/**
@@ -178,7 +178,7 @@ class Transients {
 		foreach ( $transients as $transient ) {
 			$transients_in_db[] = $transient->get_name();
 		}
-		update_option( 'imgur-image-upload-transients', $transients_in_db );
+		update_option( 'image-upload-for-imgur-transients', $transients_in_db );
 	}
 
 	/**
@@ -225,7 +225,7 @@ class Transients {
 	 */
 	public function dismiss_transient_via_ajax(): void {
 		// check nonce.
-		check_ajax_referer( 'imgur-image-upload-dismiss-nonce', 'nonce' );
+		check_ajax_referer( 'image-upload-for-imgur-dismiss-nonce', 'nonce' );
 
 		// bail if function is not called via AJAX.
 		if ( ! defined( 'DOING_AJAX' ) ) {

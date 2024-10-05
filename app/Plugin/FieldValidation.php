@@ -2,7 +2,7 @@
 /**
  * File to validate a text field setting for API.
  *
- * @package imgur-image-upload.
+ * @package image-upload-for-imgur.
  */
 
 namespace ImgurImageUpload\Plugin;
@@ -29,7 +29,7 @@ class FieldValidation {
 		if ( 0 === strlen( $value ) ) {
 			return array(
 				'error' => 'no_string_given',
-				'text'  => __( 'Please enter a valid value.', 'imgur-image-upload' ),
+				'text'  => __( 'Please enter a valid value.', 'image-upload-for-imgur' ),
 			);
 		}
 

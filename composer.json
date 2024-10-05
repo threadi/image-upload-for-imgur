@@ -1,5 +1,5 @@
 {
-    "name": "threadi/imgur-image-upload",
+    "name": "threadi/image-upload-for-imgur",
 	"version": "1.0.0",
 	"description": "Provides a Gutenberg block to upload an image to imgur via API.",
 	"type": "wordpress-plugin",

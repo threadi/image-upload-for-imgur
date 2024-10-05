@@ -4,7 +4,7 @@
  *
  * @source https://github.com/j0k3r/php-imgur-api-client
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Imgur;
@@ -75,7 +75,7 @@ class Api {
 		if ( ! Helper::is_api_set() ) {
 			wp_send_json(
 				array(
-					'error' => __( 'Imgur credentials missing.', 'imgur-image-upload' ),
+					'error' => __( 'Imgur credentials missing.', 'image-upload-for-imgur' ),
 				)
 			);
 			exit;
@@ -91,7 +91,7 @@ class Api {
 		if ( empty( $files ) ) {
 			wp_send_json(
 				array(
-					'error' => __( 'No files uploaded.', 'imgur-image-upload' ),
+					'error' => __( 'No files uploaded.', 'image-upload-for-imgur' ),
 				)
 			);
 			exit;
@@ -128,7 +128,7 @@ class Api {
 		if ( empty( $images ) ) {
 			wp_send_json(
 				array(
-					'error' => __( 'No images successfully transferred to imgur.', 'imgur-image-upload' ),
+					'error' => __( 'No images successfully transferred to imgur.', 'image-upload-for-imgur' ),
 				)
 			);
 			exit;

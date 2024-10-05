@@ -2,7 +2,7 @@
 /**
  * File for handling table of logs in this plugin.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Logging\Tables;
@@ -25,10 +25,10 @@ class Logs extends WP_List_Table {
 	 */
 	public function get_columns(): array {
 		return array(
-			'state'    => __( 'State', 'imgur-image-upload' ),
-			'date'     => __( 'Date', 'imgur-image-upload' ),
-			'log'      => __( 'Log', 'imgur-image-upload' ),
-			'category' => __( 'Category', 'imgur-image-upload' ),
+			'state'    => __( 'State', 'image-upload-for-imgur' ),
+			'date'     => __( 'Date', 'image-upload-for-imgur' ),
+			'log'      => __( 'Log', 'image-upload-for-imgur' ),
+			'category' => __( 'Category', 'image-upload-for-imgur' ),
 		);
 	}
 
@@ -157,7 +157,7 @@ class Logs extends WP_List_Table {
 			'date' => Helper::get_format_date_time( $item[ $column_name ] ),
 			'state' => $this->get_status_icon( $item[ $column_name ] ),
 			'log' => nl2br( $item[ $column_name ] ),
-			'category' => empty( $item[ $column_name ] ) ? '<i>' . esc_html__( 'not defined', 'imgur-image-upload' ) . '</i>' : $this->get_category( $item[ $column_name ] ),
+			'category' => empty( $item[ $column_name ] ) ? '<i>' . esc_html__( 'not defined', 'image-upload-for-imgur' ) . '</i>' : $this->get_category( $item[ $column_name ] ),
 			default => '',
 		};
 	}
@@ -175,7 +175,7 @@ class Logs extends WP_List_Table {
 
 		// bail if search category is not found.
 		if ( empty( $categories[ $category ] ) ) {
-			return '<i>' . esc_html__( 'Unknown', 'imgur-image-upload' ) . '</i>';
+			return '<i>' . esc_html__( 'Unknown', 'image-upload-for-imgur' ) . '</i>';
 		}
 
 		// return the category-label.
@@ -198,12 +198,12 @@ class Logs extends WP_List_Table {
 
 			// show text.
 			/* translators: %1$s will be replaced by the category name. */
-			printf( esc_html__( 'No log entries for %1$s found.', 'imgur-image-upload' ), esc_html( $categories[ $category ] ) );
+			printf( esc_html__( 'No log entries for %1$s found.', 'image-upload-for-imgur' ), esc_html( $categories[ $category ] ) );
 			return;
 		}
 
 		// show default text.
-		echo esc_html__( 'No log entries found.', 'imgur-image-upload' );
+		echo esc_html__( 'No log entries found.', 'image-upload-for-imgur' );
 	}
 
 	/**
@@ -220,7 +220,7 @@ class Logs extends WP_List_Table {
 
 		// define initial list.
 		$list = array(
-			'all' => '<a href="' . esc_url( $url ) . '"' . ( empty( $category ) ? ' class="current"' : '' ) . '>' . esc_html__( 'All', 'imgur-image-upload' ) . '</a>',
+			'all' => '<a href="' . esc_url( $url ) . '"' . ( empty( $category ) ? ' class="current"' : '' ) . '>' . esc_html__( 'All', 'image-upload-for-imgur' ) . '</a>',
 		);
 
 		// get all log categories.
@@ -299,13 +299,13 @@ class Logs extends WP_List_Table {
 			$empty_url = add_query_arg(
 				array(
 					'action' => 'imgur_image_upload_log_empty',
-					'nonce'  => wp_create_nonce( 'imgur-image-upload-log-empty' ),
+					'nonce'  => wp_create_nonce( 'image-upload-for-imgur-log-empty' ),
 				),
 				get_admin_url() . 'admin.php'
 			);
 
 			?>
-			<a href="<?php echo esc_url( $empty_url ); ?>" class="button button-secondary"><?php echo esc_html__( 'Empty the log', 'imgur-image-upload' ); ?></a>
+			<a href="<?php echo esc_url( $empty_url ); ?>" class="button button-secondary"><?php echo esc_html__( 'Empty the log', 'image-upload-for-imgur' ); ?></a>
 			<?php
 		}
 	}

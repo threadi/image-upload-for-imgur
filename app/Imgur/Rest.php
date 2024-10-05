@@ -2,7 +2,7 @@
 /**
  * File to handle the REST API for imgur-requests.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Imgur;
@@ -66,7 +66,7 @@ class Rest {
 
 		// add the route.
 		register_rest_route(
-			'imgur-image-upload/v1',
+			'image-upload-for-imgur/v1',
 			'/files/',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,

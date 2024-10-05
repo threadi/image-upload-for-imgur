@@ -2,7 +2,7 @@
 /**
  * File to handle setup of this plugin.
  *
- * @package imgur-image-upload
+ * @package image-upload-for-imgur
  */
 
 namespace ImgurImageUpload\Plugin;
@@ -54,10 +54,10 @@ class Setup {
 		$this->setup_obj->set_path( Helper::get_plugin_path() );
 		$this->setup_obj->set_texts(
 			array(
-				'title_error' => __( 'Error', 'imgur-image-upload' ),
-				'txt_error_1' => __( 'The following error occurred:', 'imgur-image-upload' ),
+				'title_error' => __( 'Error', 'image-upload-for-imgur' ),
+				'txt_error_1' => __( 'The following error occurred:', 'image-upload-for-imgur' ),
 				/* translators: %1$s will be replaced with the URL of the plugin-forum on wp.org */
-				'txt_error_2' => sprintf( __( '<strong>If reason is unclear</strong> please contact our <a href="%1$s" target="_blank">support-forum (opens new window)</a> with as much detail as possible.', 'imgur-image-upload' ), esc_url( Helper::get_plugin_support_url() ) ),
+				'txt_error_2' => sprintf( __( '<strong>If reason is unclear</strong> please contact our <a href="%1$s" target="_blank">support-forum (opens new window)</a> with as much detail as possible.', 'image-upload-for-imgur' ), esc_url( Helper::get_plugin_support_url() ) ),
 			)
 		);
 	}
@@ -134,7 +134,7 @@ class Setup {
 			// add hint to run setup.
 			$transient_obj = Transients::get_instance()->add();
 			$transient_obj->set_name( 'imgur_image_upload_start_setup_hint' );
-			$transient_obj->set_message( __( '<strong>You have installed Imgur Image Upload - nice and thank you!</strong> Now run the setup to enter your Imgur credentials to use the possibilities this plugin adds to your project.', 'imgur-image-upload' ) . '<br><br>' . sprintf( '<a href="%1$s" class="button button-primary">' . __( 'Start setup', 'imgur-image-upload' ) . '</a>', esc_url( Helper::get_settings_url() ) ) );
+			$transient_obj->set_message( __( '<strong>You have installed Image Upload for Imgur - nice and thank you!</strong> Now run the setup to enter your Imgur credentials to use the possibilities this plugin adds to your project.', 'image-upload-for-imgur' ) . '<br><br>' . sprintf( '<a href="%1$s" class="button button-primary">' . __( 'Start setup', 'image-upload-for-imgur' ) . '</a>', esc_url( Helper::get_settings_url() ) ) );
 			$transient_obj->set_type( 'error' );
 			$transient_obj->set_dismissible_days( 2 );
 			$transient_obj->set_hide_on( array( Helper::get_settings_url() ) );
@@ -189,11 +189,11 @@ class Setup {
 		// collect configuration for the setup.
 		$config = array(
 			'name'                  => $this->get_setup_name(),
-			'title'                 => __( 'Imgur Image Upload', 'imgur-image-upload' ) . ' ' . __( 'Setup', 'imgur-image-upload' ),
+			'title'                 => __( 'Image Upload for Imgur', 'image-upload-for-imgur' ) . ' ' . __( 'Setup', 'image-upload-for-imgur' ),
 			'steps'                 => $setup,
-			'back_button_label'     => __( 'Back', 'imgur-image-upload' ) . '<span class="dashicons dashicons-undo"></span>',
-			'continue_button_label' => __( 'Continue', 'imgur-image-upload' ) . '<span class="dashicons dashicons-controls-play"></span>',
-			'finish_button_label'   => __( 'Completed', 'imgur-image-upload' ) . '<span class="dashicons dashicons-saved"></span>',
+			'back_button_label'     => __( 'Back', 'image-upload-for-imgur' ) . '<span class="dashicons dashicons-undo"></span>',
+			'continue_button_label' => __( 'Continue', 'image-upload-for-imgur' ) . '<span class="dashicons dashicons-controls-play"></span>',
+			'finish_button_label'   => __( 'Completed', 'image-upload-for-imgur' ) . '<span class="dashicons dashicons-saved"></span>',
 		);
 
 		/**
@@ -261,13 +261,13 @@ class Setup {
 				'help'                    => array(
 					'type' => 'Text',
 					/* translators: %1$s will be replaced by our support-forum-URL. */
-					'text' => '<p><span class="dashicons dashicons-editor-help"></span> ' . sprintf( __( '<strong>Need help?</strong> Ask in <a href="%1$s" target="_blank">our forum (opens new window)</a>.', 'imgur-image-upload' ), esc_url( Helper::get_plugin_support_url() ) ) . '</p>',
+					'text' => '<p><span class="dashicons dashicons-editor-help"></span> ' . sprintf( __( '<strong>Need help?</strong> Ask in <a href="%1$s" target="_blank">our forum (opens new window)</a>.', 'image-upload-for-imgur' ), esc_url( Helper::get_plugin_support_url() ) ) . '</p>',
 				),
 			),
 			2 => array(
 				'runSetup' => array(
 					'type'  => 'ProgressBar',
-					'label' => __( 'Setup checking your API credentials', 'imgur-image-upload' ),
+					'label' => __( 'Setup checking your API credentials', 'image-upload-for-imgur' ),
 				),
 			),
 		);
@@ -315,13 +315,13 @@ class Setup {
 		update_option( 'wp_easy_setup_step', 1 );
 
 		// check the credentials.
-		$this->set_process_label( __( 'Checking your API credentials.', 'imgur-image-upload' ) );
+		$this->set_process_label( __( 'Checking your API credentials.', 'image-upload-for-imgur' ) );
 
 		// test the api.
 		$imgur_api_obj = Api::get_instance();
 		$upload_result = $imgur_api_obj->add_file( Helper::get_plugin_path() . 'gfx/imgur_logo.png' );
 		if ( empty( $upload_result['link'] ) ) {
-			$this->set_process_label( __( 'Error during check of your credentials!', 'imgur-image-upload' ) );
+			$this->set_process_label( __( 'Error during check of your credentials!', 'image-upload-for-imgur' ) );
 			$this->set_error();
 		}
 
@@ -344,9 +344,9 @@ class Setup {
 
 		if ( $this->has_error() ) {
 			/* translators: %1$s will be replaced by the URL for the log. */
-			$this->set_process_label( '<strong>' . __( 'Your Imgur API credentials could not be verified!', 'imgur-image-upload' ) . '</strong> ' . sprintf( __( 'Please take a look at <a href="%1$s">the log</a> to see the cause.', 'imgur-image-upload' ), esc_url( Helper::get_settings_url( 'logs' ) ) ) );
+			$this->set_process_label( '<strong>' . __( 'Your Imgur API credentials could not be verified!', 'image-upload-for-imgur' ) . '</strong> ' . sprintf( __( 'Please take a look at <a href="%1$s">the log</a> to see the cause.', 'image-upload-for-imgur' ), esc_url( Helper::get_settings_url( 'logs' ) ) ) );
 		} else {
-			$this->set_process_label( __( 'Your Imgur API credentials has been successfully checked.', 'imgur-image-upload' ) );
+			$this->set_process_label( __( 'Your Imgur API credentials has been successfully checked.', 'image-upload-for-imgur' ) );
 		}
 	}
 
@@ -371,12 +371,11 @@ class Setup {
 		// if credentials are not setup remove completion marker for setup.
 		if ( ! Helper::is_api_set() ) {
 			$this->remove_completion();
-		}
-		else {
+		} else {
 			// add transient as hint, if API has been set.
 			$transient_obj = Transients::get_instance()->add();
 			$transient_obj->set_name( 'imgur_image_upload_intro' );
-			$transient_obj->set_message( __( '<strong>Thanks for configuring the Imgur API.</strong> You are now able to use the Block "Imgur image upload" in the Block editor. Just editor one of your entries and add the Block where you want.', 'imgur-image-upload' ) );
+			$transient_obj->set_message( __( '<strong>Thanks for configuring the Imgur API.</strong> You are now able to use the Block "Image Upload via Imgur" in the Block editor. Just editor one of your entries and add the Block where you want.', 'image-upload-for-imgur' ) );
 			$transient_obj->set_type( 'success' );
 			$transient_obj->save();
 		}
@@ -416,7 +415,7 @@ class Setup {
 	 * @return string
 	 */
 	public function get_setup_name(): string {
-		return 'imgur-image-upload';
+		return 'image-upload-for-imgur';
 	}
 
 	/**

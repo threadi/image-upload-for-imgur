@@ -1,9 +1,9 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 3,
-	"name": "imgur-image-upload/imgur-image-upload",
+	"name": "image-upload-via-imgur/upload",
 	"version": "1.0.0",
-	"title": "Imgur image upload",
+	"title": "Image Upload via Imgur",
 	"category": "widgets",
 	"icon": "list-view",
 	"description": "Provides a Gutenberg block to upload an image to imgur via API.",
@@ -11,7 +11,7 @@
 		"imgur",
 		"image"
 	],
-	"textdomain": "imgur-image-upload",
+	"textdomain": "image-upload-for-imgur",
 	"editorScript": "file:block/index.js",
     "editorStyle": "file:block/index.css"
 }
