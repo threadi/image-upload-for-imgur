@@ -79,7 +79,7 @@ class Settings {
 		add_action( 'admin_menu', array( $this, 'add_settings_menu' ) );
 
 		// secure our own plugin settings.
-		add_filter( 'updated_option', array( $this, 'check_settings' ) );
+		add_action( 'updated_option', array( $this, 'check_settings' ) );
 	}
 
 	/**
@@ -93,22 +93,22 @@ class Settings {
 			array(
 				'label'         => __( 'Basic Settings', 'image-upload-for-imgur' ),
 				'key'           => '',
-				'settings_page' => 'imgur_image_upload_settings',
-				'page'          => 'imgur_image_upload_settings',
+				'settings_page' => 'image_upload_for_imgur_settings',
+				'page'          => 'image_upload_for_imgur_settings',
 				'order'         => 10,
 			),
 			array(
 				'label'         => __( 'Advanced Settings', 'image-upload-for-imgur' ),
 				'key'           => 'advanced',
-				'settings_page' => 'imgur_image_upload_settings_advanced',
-				'page'          => 'imgur_image_upload_settings',
+				'settings_page' => 'image_upload_for_imgur_settings_advanced',
+				'page'          => 'image_upload_for_imgur_settings',
 				'order'         => 20,
 			),
 			array(
 				'label'    => __( 'Logs', 'image-upload-for-imgur' ),
 				'key'      => 'logs',
 				'callback' => array( $this, 'show_log' ),
-				'page'     => 'imgur_image_upload_settings',
+				'page'     => 'image_upload_for_imgur_settings',
 				'order'    => 900,
 			),
 			array(
@@ -117,7 +117,7 @@ class Settings {
 				'url'        => Helper::get_plugin_support_url(),
 				'url_target' => '_blank',
 				'class'      => 'nav-tab-help nav-tab-active',
-				'page'       => 'imgur_image_upload_settings',
+				'page'       => 'image_upload_for_imgur_settings',
 				'order'      => 2000,
 			),
 		);
@@ -133,7 +133,7 @@ class Settings {
 		$this->settings = array(
 			'settings_section_main'     => array(
 				'label'         => __( 'General Settings', 'image-upload-for-imgur' ),
-				'settings_page' => 'imgur_image_upload_settings',
+				'settings_page' => 'image_upload_for_imgur_settings',
 				'callback'      => '__return_true',
 				'fields'        => array(
 					'imgur_api_client_id'     => array(
@@ -165,7 +165,7 @@ class Settings {
 			),
 			'settings_section_advanced' => array(
 				'label'         => __( 'Advanced Settings', 'image-upload-for-imgur' ),
-				'settings_page' => 'imgur_image_upload_settings_advanced',
+				'settings_page' => 'image_upload_for_imgur_settings_advanced',
 				'callback'      => '__return_true',
 				'fields'        => array(
 					'imgur_allow_multiple_files' => array(
@@ -219,7 +219,7 @@ class Settings {
 				'label'    => __( 'Files', 'image-upload-for-imgur' ),
 				'key'      => 'files',
 				'callback' => array( $this, 'show_files' ),
-				'page'     => 'imgur_image_upload_settings',
+				'page'     => 'image_upload_for_imgur_settings',
 				'order'    => 30,
 			);
 		}
@@ -305,7 +305,7 @@ class Settings {
 					 * @param array $field_settings Setting for this field.
 					 * @param string $field_name Internal name of the field.
 					 */
-					$arguments = apply_filters( 'imgur_image_upload_setting_field_arguments', $arguments, $field_settings, $field_name );
+					$arguments = apply_filters( 'image_upload_for_imgur_setting_field_arguments', $arguments, $field_settings, $field_name );
 
 					// add the field.
 					add_settings_field(
@@ -332,7 +332,7 @@ class Settings {
 			__( 'Image Upload for Imgur Settings', 'image-upload-for-imgur' ),
 			__( 'Image Upload for Imgur Settings', 'image-upload-for-imgur' ),
 			'manage_options',
-			'imgur_image_upload_settings',
+			'image_upload_for_imgur_settings',
 			array( $this, 'add_settings_content' ),
 			10
 		);
@@ -360,7 +360,7 @@ class Settings {
 		$tab = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 
 		// set page to show.
-		$page = 'imgur_image_upload_settings';
+		$page = 'image_upload_for_imgur_settings';
 
 		// hide the save button.
 		$hide_save_button = false;
@@ -459,7 +459,7 @@ class Settings {
 		 *
 		 * @param array $settings The settings as array.
 		 */
-		$this->settings = apply_filters( 'imgur_image_upload_settings', $settings );
+		$this->settings = apply_filters( 'image_upload_for_imgur_settings', $settings );
 
 		// return the resulting settings.
 		return $this->settings;
@@ -490,7 +490,7 @@ class Settings {
 		 *
 		 * @param array $false Set true to hide the buttons.
 		 */
-		$tabs = apply_filters( 'imgur_image_upload_settings_tabs', $tabs );
+		$tabs = apply_filters( 'image_upload_for_imgur_settings_tabs', $tabs );
 
 		// sort them by 'order'-field.
 		usort( $tabs, array( $this, 'sort_tabs' ) );
@@ -609,7 +609,7 @@ class Settings {
 		$upload_result = Api::get_instance()->add_file( Helper::get_plugin_path() . 'gfx/imgur_logo.png' );
 		if ( empty( $upload_result['link'] ) ) {
 			$transient_obj = Transients::get_instance()->add();
-			$transient_obj->set_name( 'imgur_image_upload_credential_error' );
+			$transient_obj->set_name( 'image_upload_for_imgur_credential_error' );
 			$transient_obj->set_message( __( '<strong>Error during test of your API credentials</strong> Please check your entered API key and credential.', 'image-upload-for-imgur' ) );
 			$transient_obj->set_type( 'error' );
 			$transient_obj->save();

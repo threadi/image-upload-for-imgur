@@ -58,7 +58,7 @@ class Files {
 		}
 
 		// add action to save added files in log.
-		add_action( 'imgur_image_upload_file_saved', array( $this, 'add_log_via_api' ), 10, 3 );
+		add_action( 'image_upload_for_imgur_file_saved', array( $this, 'add_log_via_api' ), 10, 3 );
 	}
 
 	/**

@@ -118,7 +118,7 @@ class Api {
 			 * @param array $img_data The imgur-response.
 			 * @param int $post_id The used post id.
 			 */
-			do_action( 'imgur_image_upload_file_saved', $file, $img_data, $post_id );
+			do_action( 'image_upload_for_imgur_file_saved', $file, $img_data, $post_id );
 
 			// add resulting link to the list of images.
 			$images[] = $img_data['link'];
@@ -169,7 +169,7 @@ class Api {
 			$results = $client->api( 'image' )->upload( $image_data );
 		} catch ( \Exception $e ) {
 			// collect error in log.
-			Log::get_instance()->add_log( __( 'Error during upload of image to imgur: ' ) . $e->getMessage(), 'error', 'system' );
+			Log::get_instance()->add_log( __( 'Error during upload of image to imgur: ', 'image-upload-for-imgur' ) . $e->getMessage(), 'error', 'system' );
 		}
 
 		return $results;

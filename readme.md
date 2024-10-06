@@ -77,3 +77,11 @@ OR use ant in build/-directory: `ant json-translations`
 ### Repair
 
 `vendor/bin/phpcs --extensions=php --ignore=*/vendor/*,*/block/*,*/node_modules/*,*/svn/*,*/releases/* --standard=ruleset.xml .`
+
+## Check for WordPress VIP Coding Standards
+
+Hint: this check runs against the VIP-GO-platform which is not our target for this plugin. Many warnings can be ignored.
+
+### Run
+
+`vendor/bin/phpcs --extensions=php --ignore=*/vendor/*,*/block/*,*/node_modules/*,*/svn/*,*/releases/* --standard=WordPress-VIP-Go .`

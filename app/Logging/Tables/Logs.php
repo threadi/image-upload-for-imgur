@@ -236,7 +236,7 @@ class Logs extends WP_List_Table {
 		 * @since 1.0.0 Available since 1.0.0.
 		 * @param array $list List of filter.
 		 */
-		return apply_filters( 'imgur_image_upload_table_filter', $list );
+		return apply_filters( 'image_upload_for_imgur_table_filter', $list );
 	}
 
 	/**
@@ -298,7 +298,7 @@ class Logs extends WP_List_Table {
 			// define empty-URL.
 			$empty_url = add_query_arg(
 				array(
-					'action' => 'imgur_image_upload_log_empty',
+					'action' => 'image_upload_for_imgur_log_empty',
 					'nonce'  => wp_create_nonce( 'image-upload-for-imgur-log-empty' ),
 				),
 				get_admin_url() . 'admin.php'

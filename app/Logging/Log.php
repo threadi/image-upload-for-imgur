@@ -52,7 +52,7 @@ class Log {
 	 * @return void
 	 */
 	public function init(): void {
-		add_action( 'admin_action_imgur_image_upload_log_empty', array( $this, 'empty_log_by_request' ) );
+		add_action( 'admin_action_image_upload_for_imgur_log_empty', array( $this, 'empty_log_by_request' ) );
 	}
 
 	/**
@@ -164,6 +164,6 @@ class Log {
 		 *
 		 * @param array $list List of categories.
 		 */
-		return apply_filters( 'imgur_image_upload_log_categories', $list );
+		return apply_filters( 'image_upload_for_imgur_log_categories', $list );
 	}
 }

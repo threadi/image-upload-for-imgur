@@ -122,7 +122,7 @@ class Setup {
 		// check if setup should be run.
 		if ( ! $this->is_completed() ) {
 			// bail if hint is already set.
-			if ( $transients_obj->get_transient_by_name( 'imgur_image_upload_start_setup_hint' )->is_set() ) {
+			if ( $transients_obj->get_transient_by_name( 'image_upload_for_imgur_start_setup_hint' )->is_set() ) {
 				return;
 			}
 
@@ -133,14 +133,14 @@ class Setup {
 
 			// add hint to run setup.
 			$transient_obj = Transients::get_instance()->add();
-			$transient_obj->set_name( 'imgur_image_upload_start_setup_hint' );
+			$transient_obj->set_name( 'image_upload_for_imgur_start_setup_hint' );
 			$transient_obj->set_message( __( '<strong>You have installed Image Upload for Imgur - nice and thank you!</strong> Now run the setup to enter your Imgur credentials to use the possibilities this plugin adds to your project.', 'image-upload-for-imgur' ) . '<br><br>' . sprintf( '<a href="%1$s" class="button button-primary">' . __( 'Start setup', 'image-upload-for-imgur' ) . '</a>', esc_url( Helper::get_settings_url() ) ) );
 			$transient_obj->set_type( 'error' );
 			$transient_obj->set_dismissible_days( 2 );
 			$transient_obj->set_hide_on( array( Helper::get_settings_url() ) );
 			$transient_obj->save();
 		} else {
-			$transients_obj->get_transient_by_name( 'imgur_image_upload_start_setup_hint' )->delete();
+			$transients_obj->get_transient_by_name( 'image_upload_for_imgur_start_setup_hint' )->delete();
 		}
 	}
 
@@ -163,7 +163,7 @@ class Setup {
 		 *
 		 * @param array $setup The setup-configuration.
 		 */
-		return apply_filters( 'imgur_image_upload_setup', $setup );
+		return apply_filters( 'image_upload_for_imgur_setup', $setup );
 	}
 
 	/**
@@ -202,7 +202,7 @@ class Setup {
 		 * @since 1.0.0 Available since 1.0.0.
 		 * @param array $config List of configuration for the setup.
 		 */
-		return apply_filters( 'imgur_image_upload_setup_config', $config );
+		return apply_filters( 'image_upload_for_imgur_setup_config', $config );
 	}
 
 	/**
@@ -374,7 +374,7 @@ class Setup {
 		} else {
 			// add transient as hint, if API has been set.
 			$transient_obj = Transients::get_instance()->add();
-			$transient_obj->set_name( 'imgur_image_upload_intro' );
+			$transient_obj->set_name( 'image_upload_for_imgur_intro' );
 			$transient_obj->set_message( __( '<strong>Thanks for configuring the Imgur API.</strong> You are now able to use the Block "Image Upload via Imgur" in the Block editor. Just editor one of your entries and add the Block where you want.', 'image-upload-for-imgur' ) );
 			$transient_obj->set_type( 'success' );
 			$transient_obj->save();

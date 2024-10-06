@@ -5,10 +5,10 @@
 	"type": "wordpress-plugin",
 	"scripts": {
 		"post-install-cmd": [
-			"\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/phpcsstandards/phpcsutils,vendor/phpcsstandards/phpcsextra"
+			"\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/phpcsstandards/phpcsutils,vendor/phpcsstandards/phpcsextra,vendor/sirbrillig/phpcs-variable-analysis,vendor/automattic/vipwpcs"
 		],
 		"post-update-cmd": [
-			"\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/phpcsstandards/phpcsutils,vendor/phpcsstandards/phpcsextra"
+			"\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/phpcsstandards/phpcsutils,vendor/phpcsstandards/phpcsextra,vendor/sirbrillig/phpcs-variable-analysis,vendor/automattic/vipwpcs"
 		]
 	},
     "autoload": {
@@ -22,7 +22,8 @@
         "threadi/wp-easy-setup": "^1.2.2"
 	},
 	"require-dev": {
-		"wp-coding-standards/wpcs": "^3.1.0"
+		"wp-coding-standards/wpcs": "^3.1.0",
+        "automattic/vipwpcs": "^3.0"
 	},
     "config": {
         "allow-plugins": {

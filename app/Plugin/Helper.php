@@ -157,7 +157,7 @@ class Helper {
 	 */
 	public static function get_settings_url( string $tab = '' ): string {
 		$params = array(
-			'page' => 'imgur_image_upload_settings',
+			'page' => 'image_upload_for_imgur_settings',
 		);
 		if ( ! empty( $tab ) ) {
 			$params['tab'] = $tab;
@@ -229,7 +229,7 @@ class Helper {
 		 * @param string $plugin_version The plugin-version.
 		 * @param string $filepath The absolute path to the requested file.
 		 */
-		return apply_filters( 'imgur_image_upload_file_version', $plugin_version, $filepath );
+		return apply_filters( 'image_upload_for_imgur_file_version', $plugin_version, $filepath );
 	}
 
 	/**
