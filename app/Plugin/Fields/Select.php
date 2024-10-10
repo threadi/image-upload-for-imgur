@@ -5,7 +5,7 @@
  * @package image-upload-for-imgurs
  */
 
-namespace ImgurImageUpload\Plugin\Fields;
+namespace ImageUploadImgur\Plugin\Fields;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;

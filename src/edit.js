@@ -40,14 +40,14 @@ export default function Edit( object ) {
 	});
 
   // get setting for multiple files.
-  const imgur_allow_multiple_files = useSelect(
-    ( select ) => select( 'core' ).getSite()?.imgur_allow_multiple_files,
+  const iufi_allow_multiple_files = useSelect(
+    ( select ) => select( 'core' ).getSite()?.iufi_allow_multiple_files,
     []
   );
 
   // get setting for types.
-  const imgur_file_types = useSelect(
-    ( select ) => select( 'core' ).getSite()?.imgur_file_types,
+  const iufi_file_types = useSelect(
+    ( select ) => select( 'core' ).getSite()?.iufi_file_types,
     []
   );
 
@@ -143,8 +143,8 @@ export default function Edit( object ) {
       {object.attributes.spinner && <Spinner />}
       {
         ! object.attributes.spinner && object.attributes.images.length === 0 && <FormFileUpload
-					accept={imgur_file_types.map(e => e).join(',')}
-					multiple={1 === imgur_allow_multiple_files}
+					accept={iufi_file_types.map(e => e).join(',')}
+					multiple={1 === iufi_allow_multiple_files}
 					onChange={(event) => {handleImagesUpload(event.target.files) }	}
           className={"button"}
 				>

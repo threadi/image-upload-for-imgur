@@ -5,7 +5,7 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
@@ -56,7 +56,7 @@ class Transients {
 		add_action( 'admin_notices', array( $this, 'init_notices' ) );
 
 		// use our own hooks.
-		add_filter( 'imgur_image_upload_transient_hide_on', array( $this, 'set_default_pages_where_transients_are_hidden' ) );
+		add_filter( 'iufi_transient_hide_on', array( $this, 'set_default_pages_where_transients_are_hidden' ) );
 
 		// process AJAX-requests to dismiss transient notices.
 		add_action( 'wp_ajax_dismiss_admin_notice', array( $this, 'dismiss_transient_via_ajax' ) );
@@ -109,7 +109,7 @@ class Transients {
 			$transients[ $transient ] = $transient_obj;
 		}
 
-		// return list as array.
+		// return the list as array.
 		return $transients;
 	}
 
@@ -197,7 +197,7 @@ class Transients {
 		 *
 		 * @param array $transients List of transients.
 		 */
-		foreach ( apply_filters( 'imgur_image_upload_get_transients_for_display', $transients ) as $transient_obj ) {
+		foreach ( apply_filters( 'iufi_get_transients_for_display', $transients ) as $transient_obj ) {
 			if ( $transient_obj->is_set() ) {
 				$transient_obj->display();
 			}
@@ -243,8 +243,8 @@ class Transients {
 		}
 
 		// save value.
-		delete_option( 'pi-dismissed-' . md5( $option_name ) );
-		add_option( 'pi-dismissed-' . md5( $option_name ), $dismissible_length, '', true );
+		delete_option( 'iufi-dismissed-' . md5( $option_name ) );
+		add_option( 'iufi-dismissed-' . md5( $option_name ), $dismissible_length, '', true );
 
 		// remove transient.
 		self::get_instance()->get_transient_by_name( $option_name )->delete();

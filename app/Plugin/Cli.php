@@ -5,13 +5,13 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Handler for cli commands.
+ * Run tasks for image upload to Imgur.
  */
 class Cli {
 	/**

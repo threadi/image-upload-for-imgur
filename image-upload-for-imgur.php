@@ -15,8 +15,8 @@
  * @package image-upload-for-imgur
  */
 
-use ImgurImageUpload\Plugin\Init;
-use ImgurImageUpload\Plugin\Installer;
+use ImageUploadImgur\Plugin\Init;
+use ImageUploadImgur\Plugin\Installer;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;

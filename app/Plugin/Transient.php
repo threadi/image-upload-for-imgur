@@ -5,7 +5,7 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
@@ -194,7 +194,7 @@ class Transient {
 					/* translators: %1$d will be replaced by the days this message will be hidden. */
 					$title = sprintf( __( 'Hide this message for %1$d days.', 'image-upload-for-imgur' ), $this->get_dismissible_days() );
 					?>
-					<button type="button" class="notice-dismiss" title="<?php echo esc_html( $title ); ?>"><?php echo esc_html__( 'Dismiss', 'image-upload-for-imgur' ); ?><span class="screen-reader-text"><?php echo esc_html( $title ); ?></span></button>
+					<button type="button" class="notice-dismiss" title="<?php echo esc_attr( $title ); ?>"><?php echo esc_html__( 'Dismiss', 'image-upload-for-imgur' ); ?><span class="screen-reader-text"><?php echo esc_html( $title ); ?></span></button>
 					<?php
 				}
 				?>
@@ -278,7 +278,7 @@ class Transient {
 	 * @return string|int|false
 	 */
 	private function get_admin_transient_dismiss_cache(): string|int|false {
-		$cache_key = 'pi-dismissed-' . md5( $this->get_name() );
+		$cache_key = 'iufi-dismissed-' . md5( $this->get_name() );
 		$timeout   = get_option( $cache_key );
 		$timeout   = 'forever' === $timeout ? time() + 60 : $timeout;
 
@@ -295,7 +295,7 @@ class Transient {
 	 * @return void
 	 */
 	public function delete_dismiss(): void {
-		delete_option( 'pi-dismissed-' . md5( $this->get_name() ) );
+		delete_option( 'iufi-dismissed-' . md5( $this->get_name() ) );
 	}
 
 	/**
@@ -371,7 +371,7 @@ class Transient {
 		 * @param array $hide_on List of absolute URLs.
 		 * @param Transient $this The actual transient object.
 		 */
-		return apply_filters( 'imgur_image_upload_transient_hide_on', $hide_on, $this );
+		return apply_filters( 'iufi_transient_hide_on', $hide_on, $this );
 	}
 
 	/**

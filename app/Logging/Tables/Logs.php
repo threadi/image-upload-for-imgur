@@ -5,13 +5,13 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Logging\Tables;
+namespace ImageUploadImgur\Logging\Tables;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
 
-use ImgurImageUpload\Logging\Log;
-use ImgurImageUpload\Plugin\Helper;
+use ImageUploadImgur\Logging\Log;
+use ImageUploadImgur\Plugin\Helper;
 use WP_List_Table;
 
 /**
@@ -77,7 +77,7 @@ class Logs extends WP_List_Table {
 			return $wpdb->get_results(
 				$wpdb->prepare(
 					'SELECT `state`, `time` AS `date`, `log`, `category`
-            			FROM `' . $wpdb->prefix . 'imgur_image_upload_logs`
+            			FROM `' . $wpdb->prefix . 'iufi_logs`
                         WHERE 1 = %d ' . $where . '
                         ORDER BY ' . esc_sql( $order_by ) . ' ASC',
 					$vars
@@ -88,7 +88,7 @@ class Logs extends WP_List_Table {
 		return $wpdb->get_results(
 			$wpdb->prepare(
 				'SELECT `state`, `time` AS `date`, `log`, `category`
-            			FROM `' . $wpdb->prefix . 'imgur_image_upload_logs`
+            			FROM `' . $wpdb->prefix . 'iufi_logs`
                         WHERE 1 = %d ' . $where . '
                         ORDER BY ' . esc_sql( $order_by ) . ' DESC',
 				$vars
@@ -236,7 +236,7 @@ class Logs extends WP_List_Table {
 		 * @since 1.0.0 Available since 1.0.0.
 		 * @param array $list List of filter.
 		 */
-		return apply_filters( 'imgur_image_upload_table_filter', $list );
+		return apply_filters( 'iufi_table_filter', $list );
 	}
 
 	/**
@@ -298,7 +298,7 @@ class Logs extends WP_List_Table {
 			// define empty-URL.
 			$empty_url = add_query_arg(
 				array(
-					'action' => 'imgur_image_upload_log_empty',
+					'action' => 'iufi_log_empty',
 					'nonce'  => wp_create_nonce( 'image-upload-for-imgur-log-empty' ),
 				),
 				get_admin_url() . 'admin.php'

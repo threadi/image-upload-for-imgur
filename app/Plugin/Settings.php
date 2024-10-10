@@ -5,14 +5,14 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
 
-use ImgurImageUpload\Imgur\Api;
-use ImgurImageUpload\Logging\Tables\Files;
-use ImgurImageUpload\Logging\Tables\Logs;
+use ImageUploadImgur\Imgur\Api;
+use ImageUploadImgur\Logging\Tables\Files;
+use ImageUploadImgur\Logging\Tables\Logs;
 
 /**
  * Object to handle settings.
@@ -79,7 +79,7 @@ class Settings {
 		add_action( 'admin_menu', array( $this, 'add_settings_menu' ) );
 
 		// secure our own plugin settings.
-		add_filter( 'updated_option', array( $this, 'check_settings' ) );
+		add_action( 'updated_option', array( $this, 'check_settings' ) );
 	}
 
 	/**
@@ -93,22 +93,22 @@ class Settings {
 			array(
 				'label'         => __( 'Basic Settings', 'image-upload-for-imgur' ),
 				'key'           => '',
-				'settings_page' => 'imgur_image_upload_settings',
-				'page'          => 'imgur_image_upload_settings',
+				'settings_page' => 'iufi_settings',
+				'page'          => 'iufi_settings',
 				'order'         => 10,
 			),
 			array(
 				'label'         => __( 'Advanced Settings', 'image-upload-for-imgur' ),
 				'key'           => 'advanced',
-				'settings_page' => 'imgur_image_upload_settings_advanced',
-				'page'          => 'imgur_image_upload_settings',
+				'settings_page' => 'iufi_settings_advanced',
+				'page'          => 'iufi_settings',
 				'order'         => 20,
 			),
 			array(
 				'label'    => __( 'Logs', 'image-upload-for-imgur' ),
 				'key'      => 'logs',
 				'callback' => array( $this, 'show_log' ),
-				'page'     => 'imgur_image_upload_settings',
+				'page'     => 'iufi_settings',
 				'order'    => 900,
 			),
 			array(
@@ -117,7 +117,7 @@ class Settings {
 				'url'        => Helper::get_plugin_support_url(),
 				'url_target' => '_blank',
 				'class'      => 'nav-tab-help nav-tab-active',
-				'page'       => 'imgur_image_upload_settings',
+				'page'       => 'iufi_settings',
 				'order'      => 2000,
 			),
 		);
@@ -133,30 +133,30 @@ class Settings {
 		$this->settings = array(
 			'settings_section_main'     => array(
 				'label'         => __( 'General Settings', 'image-upload-for-imgur' ),
-				'settings_page' => 'imgur_image_upload_settings',
+				'settings_page' => 'iufi_settings',
 				'callback'      => '__return_true',
 				'fields'        => array(
-					'imgur_api_client_id'     => array(
+					'iufi_api_client_id'     => array(
 						'label'               => __( 'Imgur API Client ID', 'image-upload-for-imgur' ),
 						'description'         => __( 'Create a new API client ID and secret <a href="https://api.imgur.com/oauth2/addclient" target="_blank">here (opens new window)</a>. Choose "OAuth 2 authorization without a callback URL" in the form.<br>Alternative you could use <a href="https://imgur.com/account/settings/apps" target="_blank">one of your existing keys (opens new window)</a>.', 'image-upload-for-imgur' ),
-						'field'               => array( 'ImgurImageUpload\Plugin\Fields\Text', 'get' ),
+						'field'               => array( 'ImageUploadImgur\Plugin\Fields\Text', 'get' ),
 						'required'            => true,
 						'register_attributes' => array(
 							'default'           => '',
 							'show_in_rest'      => true,
-							'sanitize_callback' => array( 'ImgurImageUpload\Plugin\Fields\Text', 'validate' ),
+							'sanitize_callback' => array( 'ImageUploadImgur\Plugin\Fields\Text', 'validate' ),
 							'type'              => 'string',
 						),
 						'callback'            => array( $this, 'check_credentials' ),
 					),
-					'imgur_api_client_secret' => array(
+					'iufi_api_client_secret' => array(
 						'label'               => __( 'Imgur API Client Secret', 'image-upload-for-imgur' ),
-						'field'               => array( 'ImgurImageUpload\Plugin\Fields\Text', 'get' ),
+						'field'               => array( 'ImageUploadImgur\Plugin\Fields\Text', 'get' ),
 						'required'            => true,
 						'register_attributes' => array(
 							'default'           => '',
 							'show_in_rest'      => true,
-							'sanitize_callback' => array( 'ImgurImageUpload\Plugin\Fields\Text', 'validate' ),
+							'sanitize_callback' => array( 'ImageUploadImgur\Plugin\Fields\Text', 'validate' ),
 							'type'              => 'string',
 						),
 						'callback'            => array( $this, 'check_credentials' ),
@@ -165,12 +165,12 @@ class Settings {
 			),
 			'settings_section_advanced' => array(
 				'label'         => __( 'Advanced Settings', 'image-upload-for-imgur' ),
-				'settings_page' => 'imgur_image_upload_settings_advanced',
+				'settings_page' => 'iufi_settings_advanced',
 				'callback'      => '__return_true',
 				'fields'        => array(
-					'imgur_allow_multiple_files' => array(
+					'iufi_allow_multiple_files' => array(
 						'label'               => __( 'Allow multiple files per Block', 'image-upload-for-imgur' ),
-						'field'               => array( 'ImgurImageUpload\Plugin\Fields\Checkbox', 'get' ),
+						'field'               => array( 'ImageUploadImgur\Plugin\Fields\Checkbox', 'get' ),
 						'required'            => true,
 						'register_attributes' => array(
 							'default'      => 0,
@@ -178,9 +178,9 @@ class Settings {
 							'type'         => 'integer',
 						),
 					),
-					'imgur_file_types'           => array(
+					'iufi_file_types'           => array(
 						'label'               => __( 'Choose allowed file types', 'image-upload-for-imgur' ),
-						'field'               => array( 'ImgurImageUpload\Plugin\Fields\Select', 'get' ),
+						'field'               => array( 'ImageUploadImgur\Plugin\Fields\Select', 'get' ),
 						'options'             => $file_types_array,
 						'hide_empty_option'   => true,
 						'multiple'            => true,
@@ -188,7 +188,7 @@ class Settings {
 						'register_attributes' => array(
 							'default'      => Api::get_instance()->get_allowed_file_types(),
 							'show_in_rest' => array(
-								'name'   => 'imgur_file_types',
+								'name'   => 'iufi_file_types',
 								'schema' => array(
 									'type'  => 'array',
 									'items' => array(
@@ -200,9 +200,9 @@ class Settings {
 						),
 						'callback'            => array( $this, 'check_file_types' ),
 					),
-					'imgur_log_files'            => array(
+					'iufi_log_files'            => array(
 						'label'               => __( 'Log all uploaded files', 'image-upload-for-imgur' ),
-						'field'               => array( 'ImgurImageUpload\Plugin\Fields\Checkbox', 'get' ),
+						'field'               => array( 'ImageUploadImgur\Plugin\Fields\Checkbox', 'get' ),
 						'required'            => true,
 						'register_attributes' => array(
 							'default' => 0,
@@ -214,12 +214,12 @@ class Settings {
 		);
 
 		// add file list, if enabled.
-		if ( 1 === absint( get_option( 'imgur_log_files' ) ) ) {
+		if ( 1 === absint( get_option( 'iufi_log_files' ) ) ) {
 			$this->tabs[] = array(
 				'label'    => __( 'Files', 'image-upload-for-imgur' ),
 				'key'      => 'files',
 				'callback' => array( $this, 'show_files' ),
-				'page'     => 'imgur_image_upload_settings',
+				'page'     => 'iufi_settings',
 				'order'    => 30,
 			);
 		}
@@ -305,7 +305,7 @@ class Settings {
 					 * @param array $field_settings Setting for this field.
 					 * @param string $field_name Internal name of the field.
 					 */
-					$arguments = apply_filters( 'imgur_image_upload_setting_field_arguments', $arguments, $field_settings, $field_name );
+					$arguments = apply_filters( 'iufi_setting_field_arguments', $arguments, $field_settings, $field_name );
 
 					// add the field.
 					add_settings_field(
@@ -332,7 +332,7 @@ class Settings {
 			__( 'Image Upload for Imgur Settings', 'image-upload-for-imgur' ),
 			__( 'Image Upload for Imgur Settings', 'image-upload-for-imgur' ),
 			'manage_options',
-			'imgur_image_upload_settings',
+			'iufi_settings',
 			array( $this, 'add_settings_content' ),
 			10
 		);
@@ -360,7 +360,7 @@ class Settings {
 		$tab = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) );
 
 		// set page to show.
-		$page = 'imgur_image_upload_settings';
+		$page = 'iufi_settings';
 
 		// hide the save button.
 		$hide_save_button = false;
@@ -459,7 +459,7 @@ class Settings {
 		 *
 		 * @param array $settings The settings as array.
 		 */
-		$this->settings = apply_filters( 'imgur_image_upload_settings', $settings );
+		$this->settings = apply_filters( 'iufi_settings', $settings );
 
 		// return the resulting settings.
 		return $this->settings;
@@ -490,7 +490,7 @@ class Settings {
 		 *
 		 * @param array $false Set true to hide the buttons.
 		 */
-		$tabs = apply_filters( 'imgur_image_upload_settings_tabs', $tabs );
+		$tabs = apply_filters( 'iufi_settings_tabs', $tabs );
 
 		// sort them by 'order'-field.
 		usort( $tabs, array( $this, 'sort_tabs' ) );
@@ -544,7 +544,7 @@ class Settings {
 	 */
 	public function check_settings( string $option ): void {
 		// bail if option is not part of our plugin.
-		if ( false === stripos( $option, 'imgur_' ) ) {
+		if ( false === stripos( $option, 'iufi_' ) ) {
 			return;
 		}
 
@@ -609,7 +609,7 @@ class Settings {
 		$upload_result = Api::get_instance()->add_file( Helper::get_plugin_path() . 'gfx/imgur_logo.png' );
 		if ( empty( $upload_result['link'] ) ) {
 			$transient_obj = Transients::get_instance()->add();
-			$transient_obj->set_name( 'imgur_image_upload_credential_error' );
+			$transient_obj->set_name( 'iufi_credential_error' );
 			$transient_obj->set_message( __( '<strong>Error during test of your API credentials</strong> Please check your entered API key and credential.', 'image-upload-for-imgur' ) );
 			$transient_obj->set_type( 'error' );
 			$transient_obj->save();
