@@ -5,13 +5,13 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
 
-use ImgurImageUpload\Logging\Files;
-use ImgurImageUpload\Logging\Log;
+use ImageUploadImgur\Logging\Files;
+use ImageUploadImgur\Logging\Log;
 
 /**
  * Object to handle the uninstallation of this plugin.

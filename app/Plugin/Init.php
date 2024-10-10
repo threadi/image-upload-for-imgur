@@ -5,14 +5,14 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
 
-use ImgurImageUpload\Imgur\Rest;
-use ImgurImageUpload\Logging\Files;
-use ImgurImageUpload\Logging\Log;
+use ImageUploadImgur\Imgur\Rest;
+use ImageUploadImgur\Logging\Files;
+use ImageUploadImgur\Logging\Log;
 
 /**
  * Object to handle the initialization of this plugin.
@@ -119,7 +119,7 @@ class Init {
 	 * @return void
 	 */
 	public function register_cli(): void {
-		\WP_CLI::add_command( 'imgur', 'ImgurImageUpload\Plugin\Cli' );
+		\WP_CLI::add_command( 'image-upload-imgur', 'ImageUploadImgur\Plugin\Cli' );
 	}
 
 	/**
@@ -148,7 +148,7 @@ class Init {
 		// add php-vars to our js-script.
 		wp_localize_script(
 			'image-upload-for-imgur',
-			'imgurImageUploadJsVars',
+			'iufiJsVars',
 			array(
 				'review_url'    => Helper::get_review_url(),
 				'title_rate_us' => __( 'Rate us!', 'image-upload-for-imgur' ),

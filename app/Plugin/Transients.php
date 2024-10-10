@@ -5,7 +5,7 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
@@ -56,7 +56,7 @@ class Transients {
 		add_action( 'admin_notices', array( $this, 'init_notices' ) );
 
 		// use our own hooks.
-		add_filter( 'image_upload_for_imgur_transient_hide_on', array( $this, 'set_default_pages_where_transients_are_hidden' ) );
+		add_filter( 'iufi_transient_hide_on', array( $this, 'set_default_pages_where_transients_are_hidden' ) );
 
 		// process AJAX-requests to dismiss transient notices.
 		add_action( 'wp_ajax_dismiss_admin_notice', array( $this, 'dismiss_transient_via_ajax' ) );
@@ -197,7 +197,7 @@ class Transients {
 		 *
 		 * @param array $transients List of transients.
 		 */
-		foreach ( apply_filters( 'image_upload_for_imgur_get_transients_for_display', $transients ) as $transient_obj ) {
+		foreach ( apply_filters( 'iufi_get_transients_for_display', $transients ) as $transient_obj ) {
 			if ( $transient_obj->is_set() ) {
 				$transient_obj->display();
 			}

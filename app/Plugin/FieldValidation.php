@@ -5,7 +5,7 @@
  * @package image-upload-for-imgur.
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;

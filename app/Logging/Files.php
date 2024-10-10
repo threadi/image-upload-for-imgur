@@ -5,7 +5,7 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Logging;
+namespace ImageUploadImgur\Logging;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
@@ -53,12 +53,12 @@ class Files {
 	 */
 	public function init(): void {
 		// bail if logging is not enabled.
-		if ( 1 !== absint( get_option( 'imgur_log_files' ) ) ) {
+		if ( 1 !== absint( get_option( 'iufi_log_files' ) ) ) {
 			return;
 		}
 
 		// add action to save added files in log.
-		add_action( 'image_upload_for_imgur_file_saved', array( $this, 'add_log_via_api' ), 10, 3 );
+		add_action( 'iufi_file_saved', array( $this, 'add_log_via_api' ), 10, 3 );
 	}
 
 	/**
@@ -71,7 +71,7 @@ class Files {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		// table for import-log.
-		$sql = 'CREATE TABLE ' . $wpdb->prefix . "imgur_image_upload_files (
+		$sql = 'CREATE TABLE ' . $wpdb->prefix . "iufi_files (
             `id` mediumint(9) NOT NULL AUTO_INCREMENT,
             `time` datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
             `filename_original` text DEFAULT '' NOT NULL,
@@ -92,7 +92,7 @@ class Files {
 	 */
 	public function delete_table(): void {
 		global $wpdb;
-		$wpdb->query( sprintf( 'DROP TABLE IF EXISTS %s', esc_sql( $wpdb->prefix . 'imgur_image_upload_files' ) ) );
+		$wpdb->query( sprintf( 'DROP TABLE IF EXISTS %s', esc_sql( $wpdb->prefix . 'iufi_files' ) ) );
 	}
 
 	/**
@@ -108,7 +108,7 @@ class Files {
 	public function add_log( string $filename_original, string $imgur_url, int $post_id = 0, int $user_id = 0 ): void {
 		global $wpdb;
 		$wpdb->insert(
-			$wpdb->prefix . 'imgur_image_upload_files',
+			$wpdb->prefix . 'iufi_files',
 			array(
 				'time'              => gmdate( 'Y-m-d H:i:s' ),
 				'filename_original' => $filename_original,

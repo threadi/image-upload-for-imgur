@@ -5,12 +5,12 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
 
-use ImgurImageUpload\Imgur\Api;
+use ImageUploadImgur\Imgur\Api;
 
 /**
  * Object to handle the setup of this plugin.
@@ -31,13 +31,6 @@ class Setup {
 	private array $setup = array();
 
 	/**
-	 * The object of the setup.
-	 *
-	 * @var \wpEasySetup\Setup
-	 */
-	private \wpEasySetup\Setup $setup_obj;
-
-	/**
 	 * Mark setup as error.
 	 *
 	 * @var bool
@@ -47,20 +40,7 @@ class Setup {
 	/**
 	 * Constructor for this handler.
 	 */
-	private function __construct() {
-		// get the setup-object.
-		$this->setup_obj = \wpEasySetup\Setup::get_instance();
-		$this->setup_obj->set_url( Helper::get_plugin_url() );
-		$this->setup_obj->set_path( Helper::get_plugin_path() );
-		$this->setup_obj->set_texts(
-			array(
-				'title_error' => __( 'Error', 'image-upload-for-imgur' ),
-				'txt_error_1' => __( 'The following error occurred:', 'image-upload-for-imgur' ),
-				/* translators: %1$s will be replaced with the URL of the plugin-forum on wp.org */
-				'txt_error_2' => sprintf( __( '<strong>If reason is unclear</strong> please contact our <a href="%1$s" target="_blank">support-forum (opens new window)</a> with as much detail as possible.', 'image-upload-for-imgur' ), esc_url( Helper::get_plugin_support_url() ) ),
-			)
-		);
-	}
+	private function __construct() {}
 
 	/**
 	 * Prevent cloning of this object.
@@ -89,15 +69,28 @@ class Setup {
 		// check to show hint if setup should be run.
 		$this->show_hint();
 
+		// initialize the setup object.
+		$setup_obj = \easySetupForWordPress\Setup::get_instance();
+		$setup_obj->init();
+
+		// configure settings for the setup.
+		$setup_obj->set_url( Helper::get_plugin_url() );
+		$setup_obj->set_path( Helper::get_plugin_path() );
+		$setup_obj->set_texts(
+			array(
+				'title_error' => __( 'Error', 'image-upload-for-imgur' ),
+				'txt_error_1' => __( 'The following error occurred:', 'image-upload-for-imgur' ),
+				'txt_error_2' => __( 'text after error', 'image-upload-for-imgur' ),
+			)
+		);
+		$setup_obj->set_config( $this->get_config() );
+
 		// only load setup if it is not completed.
 		if ( ! $this->is_completed() ) {
-			add_filter( 'wp_easy_setup_completed', array( $this, 'check_completed_value' ), 10, 2 );
-			add_action( 'wp_easy_setup_set_completed', array( $this, 'forward_user_on_completion' ) );
-			add_action( 'wp_easy_setup_process', array( $this, 'run_process' ) );
-			add_action( 'wp_easy_setup_process', array( $this, 'show_process_end' ), PHP_INT_MAX );
-
-			// set configuration for the setup.
-			$this->setup_obj->set_config( $this->get_config() );
+			add_filter( 'esfw_completed', array( $this, 'check_completed_value' ), 10, 2 );
+			add_action( 'esfw_set_completed', array( $this, 'forward_user_on_completion' ) );
+			add_action( 'esfw_process', array( $this, 'run_process' ) );
+			add_action( 'esfw_process', array( $this, 'show_process_end' ), PHP_INT_MAX );
 		}
 	}
 
@@ -107,7 +100,7 @@ class Setup {
 	 * @return bool
 	 */
 	public function is_completed(): bool {
-		return $this->setup_obj->is_completed( $this->get_setup_name() );
+		return \easySetupForWordPress\Setup::get_instance()->is_completed( $this->get_setup_name() );
 	}
 
 	/**
@@ -122,7 +115,7 @@ class Setup {
 		// check if setup should be run.
 		if ( ! $this->is_completed() ) {
 			// bail if hint is already set.
-			if ( $transients_obj->get_transient_by_name( 'image_upload_for_imgur_start_setup_hint' )->is_set() ) {
+			if ( $transients_obj->get_transient_by_name( 'iufi_start_setup_hint' )->is_set() ) {
 				return;
 			}
 
@@ -133,14 +126,14 @@ class Setup {
 
 			// add hint to run setup.
 			$transient_obj = Transients::get_instance()->add();
-			$transient_obj->set_name( 'image_upload_for_imgur_start_setup_hint' );
+			$transient_obj->set_name( 'iufi_start_setup_hint' );
 			$transient_obj->set_message( __( '<strong>You have installed Image Upload for Imgur - nice and thank you!</strong> Now run the setup to enter your Imgur credentials to use the possibilities this plugin adds to your project.', 'image-upload-for-imgur' ) . '<br><br>' . sprintf( '<a href="%1$s" class="button button-primary">' . __( 'Start setup', 'image-upload-for-imgur' ) . '</a>', esc_url( Helper::get_settings_url() ) ) );
 			$transient_obj->set_type( 'error' );
 			$transient_obj->set_dismissible_days( 2 );
 			$transient_obj->set_hide_on( array( Helper::get_settings_url() ) );
 			$transient_obj->save();
 		} else {
-			$transients_obj->get_transient_by_name( 'image_upload_for_imgur_start_setup_hint' )->delete();
+			$transients_obj->get_transient_by_name( 'iufi_start_setup_hint' )->delete();
 		}
 	}
 
@@ -163,7 +156,7 @@ class Setup {
 		 *
 		 * @param array $setup The setup-configuration.
 		 */
-		return apply_filters( 'image_upload_for_imgur_setup', $setup );
+		return apply_filters( 'iufi_setup', $setup );
 	}
 
 	/**
@@ -172,7 +165,7 @@ class Setup {
 	 * @return void
 	 */
 	public function display(): void {
-		echo wp_kses_post( $this->setup_obj->display( $this->get_setup_name() ) );
+		echo wp_kses_post( \easySetupForWordPress\Setup::get_instance()->display( $this->get_setup_name() ) );
 	}
 
 	/**
@@ -202,7 +195,7 @@ class Setup {
 		 * @since 1.0.0 Available since 1.0.0.
 		 * @param array $config List of configuration for the setup.
 		 */
-		return apply_filters( 'image_upload_for_imgur_setup_config', $config );
+		return apply_filters( 'iufi_setup_config', $config );
 	}
 
 	/**
@@ -213,7 +206,7 @@ class Setup {
 	 * @return void
 	 */
 	public function set_process_label( string $label ): void {
-		update_option( 'wp_easy_setup_step_label', $label );
+		update_option( 'esfw_step_label', $label );
 	}
 
 	/**
@@ -224,7 +217,7 @@ class Setup {
 	 * @return void
 	 */
 	public function update_process_step( int $step = 1 ): void {
-		update_option( 'wp_easy_setup_step', absint( get_option( 'wp_easy_setup_step', 0 ) + $step ) );
+		update_option( 'esfw_steps', absint( get_option( 'esfw_step', 0 ) + $step ) );
 	}
 
 	/**
@@ -238,27 +231,27 @@ class Setup {
 		$settings->set_settings();
 
 		// get the field config.
-		$api_id_settings  = $settings->get_settings_for_field( 'imgur_api_client_id' );
-		$api_key_settings = $settings->get_settings_for_field( 'imgur_api_client_secret' );
+		$api_id_settings  = $settings->get_settings_for_field( 'iufi_api_client_id' );
+		$api_key_settings = $settings->get_settings_for_field( 'iufi_api_client_secret' );
 
 		// define setup.
 		$this->setup = array(
 			1 => array(
-				'imgur_api_client_id'     => array(
+				'iufi_api_client_id'     => array(
 					'type'                => 'TextControl',
 					'label'               => $api_id_settings['label'],
 					'help'                => $api_id_settings['description'],
 					'required'            => true,
-					'validation_callback' => 'ImgurImageUpload\Plugin\FieldValidation::rest_validate',
+					'validation_callback' => 'ImageUploadImgur\Plugin\FieldValidation::rest_validate',
 				),
-				'imgur_api_client_secret' => array(
+				'iufi_api_client_secret' => array(
 					'type'                => 'TextControl',
 					'label'               => $api_key_settings['label'],
 					'help'                => '',
 					'required'            => true,
-					'validation_callback' => 'ImgurImageUpload\Plugin\FieldValidation::rest_validate',
+					'validation_callback' => 'ImageUploadImgur\Plugin\FieldValidation::rest_validate',
 				),
-				'help'                    => array(
+				'help'                   => array(
 					'type' => 'Text',
 					/* translators: %1$s will be replaced by our support-forum-URL. */
 					'text' => '<p><span class="dashicons dashicons-editor-help"></span> ' . sprintf( __( '<strong>Need help?</strong> Ask in <a href="%1$s" target="_blank">our forum (opens new window)</a>.', 'image-upload-for-imgur' ), esc_url( Helper::get_plugin_support_url() ) ) . '</p>',
@@ -281,7 +274,7 @@ class Setup {
 	 * @return void
 	 */
 	public function update_max_step( int $max_count ): void {
-		update_option( 'wp_easy_setup_max_steps', absint( get_option( 'wp_easy_setup_max_steps' ) ) + $max_count );
+		update_option( 'esfw_max_steps', absint( get_option( 'esfw_max_steps' ) ) + $max_count );
 	}
 
 	/**
@@ -292,7 +285,7 @@ class Setup {
 	 * @return void
 	 */
 	public function update_step( int $count ): void {
-		update_option( 'wp_easy_setup_step', absint( get_option( 'wp_easy_setup_step' ) ) + $count );
+		update_option( 'esfw_steps', absint( get_option( 'esfw_step' ) ) + $count );
 	}
 
 	/**
@@ -312,7 +305,7 @@ class Setup {
 		$this->update_max_step( 2 );
 
 		// set actual step count.
-		update_option( 'wp_easy_setup_step', 1 );
+		update_option( 'esfw_steps', 1 );
 
 		// check the credentials.
 		$this->set_process_label( __( 'Checking your API credentials.', 'image-upload-for-imgur' ) );
@@ -374,7 +367,7 @@ class Setup {
 		} else {
 			// add transient as hint, if API has been set.
 			$transient_obj = Transients::get_instance()->add();
-			$transient_obj->set_name( 'image_upload_for_imgur_intro' );
+			$transient_obj->set_name( 'iufi_intro' );
 			$transient_obj->set_message( __( '<strong>Thanks for configuring the Imgur API.</strong> You are now able to use the Block "Image Upload via Imgur" in the Block editor. Just editor one of your entries and add the Block where you want.', 'image-upload-for-imgur' ) );
 			$transient_obj->set_type( 'success' );
 			$transient_obj->save();
@@ -443,7 +436,7 @@ class Setup {
 	 */
 	public function remove_completion(): void {
 		// get actual list of completed setups.
-		$actual_completed = get_option( 'wp_easy_setup_completed', array() );
+		$actual_completed = get_option( 'esfw_completed', array() );
 
 		// get entry.
 		$key = array_search( $this->get_setup_name(), $actual_completed, true );
@@ -452,6 +445,6 @@ class Setup {
 		}
 
 		// add the actual setup to the list of completed setups.
-		update_option( 'wp_easy_setup_completed', $actual_completed );
+		update_option( 'esfw_completed', $actual_completed );
 	}
 }

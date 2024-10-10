@@ -13,13 +13,13 @@
 	},
     "autoload": {
         "psr-4": {
-            "ImgurImageUpload\\": "app/"
+            "ImageUploadImgur\\": "app/"
         }
     },
 	"require": {
 		"php": "^8.0",
 		"j0k3r/php-imgur-api-client": "^4.0",
-        "threadi/wp-easy-setup": "^1.2.2"
+        "threadi/easy-setup-for-wordpress": "^1.0.0"
 	},
 	"require-dev": {
 		"wp-coding-standards/wpcs": "^3.1.0",
@@ -29,6 +29,10 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
+        "optimize-autoloader": true,
+        "classmap-authoritative": true,
+        "apcu-autoloader": true,
+        "prepend-autoloader": false,
         "platform-check": false
     }
 }

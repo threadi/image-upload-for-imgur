@@ -5,13 +5,13 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Logging\Tables;
+namespace ImageUploadImgur\Logging\Tables;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
 
-use ImgurImageUpload\Logging\Log;
-use ImgurImageUpload\Plugin\Helper;
+use ImageUploadImgur\Logging\Log;
+use ImageUploadImgur\Plugin\Helper;
 use WP_List_Table;
 use WP_User;
 
@@ -65,7 +65,7 @@ class Files extends WP_List_Table {
 			return $wpdb->get_results(
 				$wpdb->prepare(
 					'SELECT `time` AS `date`, `filename_original`, `imgur_url`, `post_id`, `user_id`
-            			FROM `' . $wpdb->prefix . 'imgur_image_upload_files`
+            			FROM `' . $wpdb->prefix . 'iufi_files`
                         WHERE 1 = %d ' . $where . '
                         ORDER BY ' . esc_sql( $order_by ) . ' ASC',
 					$vars
@@ -76,7 +76,7 @@ class Files extends WP_List_Table {
 		return $wpdb->get_results(
 			$wpdb->prepare(
 				'SELECT `time` AS `date`, `filename_original`, `imgur_url`, `post_id`, `user_id`
-            			FROM `' . $wpdb->prefix . 'imgur_image_upload_files`
+            			FROM `' . $wpdb->prefix . 'iufi_files`
                         WHERE 1 = %d ' . $where . '
                         ORDER BY ' . esc_sql( $order_by ) . ' DESC',
 				$vars

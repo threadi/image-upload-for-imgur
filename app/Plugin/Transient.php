@@ -5,7 +5,7 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
@@ -371,7 +371,7 @@ class Transient {
 		 * @param array $hide_on List of absolute URLs.
 		 * @param Transient $this The actual transient object.
 		 */
-		return apply_filters( 'image_upload_for_imgur_transient_hide_on', $hide_on, $this );
+		return apply_filters( 'iufi_transient_hide_on', $hide_on, $this );
 	}
 
 	/**

@@ -39,7 +39,7 @@
         <exec dir="${src.dir}" failonerror="true" executable="${npm.path}" output="${log.dir}/npm-install1.txt">
             <arg line="install"/>
         </exec>
-        <exec dir="${src.dir}/vendor/threadi/wp-easy-setup/" failonerror="true" executable="${npm.path}" output="${log.dir}/npm-install2.txt">
+        <exec dir="${src.dir}/vendor/threadi/easy-setup-for-wordpress/" failonerror="true" executable="${npm.path}" output="${log.dir}/npm-install2.txt">
             <arg line="install"/>
         </exec>
     </target>
@@ -51,7 +51,7 @@
         <exec dir="${src.dir}" failonerror="true" executable="${npm.path}" output="${log.dir}/npm-build1.txt">
             <arg line="run build"/>
         </exec>
-        <exec dir="${src.dir}/vendor/threadi/wp-easy-setup/" failonerror="true" executable="${npm.path}" output="${log.dir}/npm-build2.txt">
+        <exec dir="${src.dir}/vendor/threadi/easy-setup-for-wordpress/" failonerror="true" executable="${npm.path}" output="${log.dir}/npm-build2.txt">
             <arg line="run build"/>
         </exec>
     </target>
@@ -115,8 +115,8 @@
             <zipfileset dir="${src.dir}/vendor/ralouphie" prefix="${plugin.slug}/vendor/ralouphie" />
             <zipfileset dir="${src.dir}/vendor/psr" prefix="${plugin.slug}/vendor/psr" />
             <zipfileset dir="${src.dir}/vendor/symfony" prefix="${plugin.slug}/vendor/symfony" />
-            <zipfileset dir="${src.dir}/vendor/threadi/wp-easy-setup/build/" prefix="${plugin.slug}/vendor/threadi/wp-easy-setup/build/" />
-            <zipfileset dir="${src.dir}/vendor/threadi/wp-easy-setup/lib/" prefix="${plugin.slug}/vendor/threadi/wp-easy-setup/lib/" />
+            <zipfileset dir="${src.dir}/vendor/threadi/easy-setup-for-wordpress/build/" prefix="${plugin.slug}/vendor/threadi/easy-setup-for-wordpress/build/" />
+            <zipfileset dir="${src.dir}/vendor/threadi/easy-setup-for-wordpress/lib/" prefix="${plugin.slug}/vendor/threadi/easy-setup-for-wordpress/lib/" />
             <zipfileset dir="${src.dir}" includes="block.json,readme.txt,composer.json" prefix="${plugin.slug}" />
             <zipfileset dir="${src.dir}" includes="uninstall-release.php" fullpath="${plugin.slug}/uninstall.php" />
             <zipfileset dir="${src.dir}" includes="${plugin.slug}-release.php" fullpath="${plugin.slug}/${plugin.slug}.php" />

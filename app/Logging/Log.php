@@ -5,7 +5,7 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Logging;
+namespace ImageUploadImgur\Logging;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
@@ -65,7 +65,7 @@ class Log {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		// table for import-log.
-		$sql = 'CREATE TABLE ' . $wpdb->prefix . "imgur_image_upload_logs (
+		$sql = 'CREATE TABLE ' . $wpdb->prefix . "iufi_logs (
             `id` mediumint(9) NOT NULL AUTO_INCREMENT,
             `time` datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
             `log` text DEFAULT '' NOT NULL,
@@ -86,7 +86,7 @@ class Log {
 	 */
 	public function delete_table(): void {
 		global $wpdb;
-		$wpdb->query( sprintf( 'DROP TABLE IF EXISTS %s', esc_sql( $wpdb->prefix . 'imgur_image_upload_logs' ) ) );
+		$wpdb->query( sprintf( 'DROP TABLE IF EXISTS %s', esc_sql( $wpdb->prefix . 'iufi_upload_logs' ) ) );
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Log {
 	public function add_log( string $log, string $state, string $category = '', string $md5 = '' ): void {
 		global $wpdb;
 		$wpdb->insert(
-			$wpdb->prefix . 'imgur_image_upload_logs',
+			$wpdb->prefix . 'iufi_upload_logs',
 			array(
 				'time'     => gmdate( 'Y-m-d H:i:s' ),
 				'log'      => $log,
@@ -124,7 +124,7 @@ class Log {
 		global $wpdb;
 
 		// delete entries older than 7 days.
-		$wpdb->query( sprintf( 'DELETE FROM %s WHERE `time` < DATE_SUB(NOW(), INTERVAL 7 DAY)', esc_sql( $wpdb->prefix . 'imgur_image_upload_logs' ) ) );
+		$wpdb->query( sprintf( 'DELETE FROM %s WHERE `time` < DATE_SUB(NOW(), INTERVAL 7 DAY)', esc_sql( $wpdb->prefix . 'iufi_upload_logs' ) ) );
 	}
 
 	/**
@@ -140,7 +140,7 @@ class Log {
 		check_admin_referer( 'image-upload-for-imgur-log-empty', 'nonce' );
 
 		// empty the table.
-		$wpdb->query( 'TRUNCATE TABLE `' . $wpdb->prefix . 'imgur_image_upload_logs`' );
+		$wpdb->query( 'TRUNCATE TABLE `' . $wpdb->prefix . 'iufi_upload_logs`' );
 
 		// redirect user.
 		wp_safe_redirect( wp_get_referer() );
@@ -164,6 +164,6 @@ class Log {
 		 *
 		 * @param array $list List of categories.
 		 */
-		return apply_filters( 'image_upload_for_imgur_log_categories', $list );
+		return apply_filters( 'iufi_log_categories', $list );
 	}
 }

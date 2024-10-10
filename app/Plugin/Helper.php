@@ -5,7 +5,7 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
@@ -99,7 +99,7 @@ class Helper {
 	 * @return bool
 	 */
 	public static function is_api_set(): bool {
-		return ! empty( get_option( 'imgur_api_client_id' ) ) && ! empty( get_option( 'imgur_api_client_secret' ) );
+		return ! empty( get_option( 'iufi_api_client_id' ) ) && ! empty( get_option( 'iufi_api_client_secret' ) );
 	}
 
 	/**
@@ -157,7 +157,7 @@ class Helper {
 	 */
 	public static function get_settings_url( string $tab = '' ): string {
 		$params = array(
-			'page' => 'image_upload_for_imgur_settings',
+			'page' => 'iufi_settings',
 		);
 		if ( ! empty( $tab ) ) {
 			$params['tab'] = $tab;
@@ -229,7 +229,7 @@ class Helper {
 		 * @param string $plugin_version The plugin-version.
 		 * @param string $filepath The absolute path to the requested file.
 		 */
-		return apply_filters( 'image_upload_for_imgur_file_version', $plugin_version, $filepath );
+		return apply_filters( 'iufi_file_version', $plugin_version, $filepath );
 	}
 
 	/**

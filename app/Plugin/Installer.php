@@ -5,13 +5,13 @@
  * @package image-upload-for-imgur
  */
 
-namespace ImgurImageUpload\Plugin;
+namespace ImageUploadImgur\Plugin;
 
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
 
-use ImgurImageUpload\Logging\Files;
-use ImgurImageUpload\Logging\Log;
+use ImageUploadImgur\Logging\Files;
+use ImageUploadImgur\Logging\Log;
 
 /**
  * Object to handle the initialization of this plugin.
@@ -79,8 +79,8 @@ class Installer {
 	 */
 	private function activation_tasks(): void {
 		// add our options for credentials without active autoload (as it is only needed in rare actions and never in frontend).
-		add_option( 'imgur_api_client_id', '', '', false );
-		add_option( 'imgur_api_client_secret', '', '', false );
+		add_option( 'iufi_api_client_id', '', '', false );
+		add_option( 'iufi_api_client_secret', '', '', false );
 
 		// install log table.
 		Log::get_instance()->create_table();
