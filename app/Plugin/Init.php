@@ -150,8 +150,10 @@ class Init {
 			'image-upload-for-imgur',
 			'iufiJsVars',
 			array(
+				'ajax_url'      => admin_url( 'admin-ajax.php' ),
 				'review_url'    => Helper::get_review_url(),
 				'title_rate_us' => __( 'Rate us!', 'image-upload-for-imgur' ),
+				'dismiss_nonce' => wp_create_nonce( 'image-upload-for-imgur-dismiss-nonce' ),
 			)
 		);
 	}

@@ -8,4 +8,22 @@ body.settings_page_iufi_settings .review-hint-button:after {
 	margin-left: 8px;
 }
 
-.image-upload-for-imgur-transient img { width: 80px }
+.image-upload-for-imgur-transient {
+	position: relative;
+	z-index: 1;
+}
+
+.image-upload-for-imgur-transient img {
+	margin-right: 8px;
+	vertical-align: middle;
+	width: 80px;
+}
+
+.image-upload-for-imgur-transient .notice-dismiss:before {
+	display: inline-block;
+	float: right;
+}
+
+.image-upload-for-imgur-transient .notice-dismiss:hover {
+	color: #d63638;
+}
