@@ -86,7 +86,7 @@ class Log {
 	 */
 	public function delete_table(): void {
 		global $wpdb;
-		$wpdb->query( sprintf( 'DROP TABLE IF EXISTS %s', esc_sql( $wpdb->prefix . 'iufi_upload_logs' ) ) );
+		$wpdb->query( sprintf( 'DROP TABLE IF EXISTS %s', esc_sql( $wpdb->prefix . 'iufi_logs' ) ) );
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Log {
 	public function add_log( string $log, string $state, string $category = '', string $md5 = '' ): void {
 		global $wpdb;
 		$wpdb->insert(
-			$wpdb->prefix . 'iufi_upload_logs',
+			$wpdb->prefix . 'iufi_logs',
 			array(
 				'time'     => gmdate( 'Y-m-d H:i:s' ),
 				'log'      => $log,
@@ -124,7 +124,7 @@ class Log {
 		global $wpdb;
 
 		// delete entries older than 7 days.
-		$wpdb->query( sprintf( 'DELETE FROM %s WHERE `time` < DATE_SUB(NOW(), INTERVAL 7 DAY)', esc_sql( $wpdb->prefix . 'iufi_upload_logs' ) ) );
+		$wpdb->query( sprintf( 'DELETE FROM %s WHERE `time` < DATE_SUB(NOW(), INTERVAL 7 DAY)', esc_sql( $wpdb->prefix . 'iufi_logs' ) ) );
 	}
 
 	/**
@@ -140,7 +140,7 @@ class Log {
 		check_admin_referer( 'image-upload-for-imgur-log-empty', 'nonce' );
 
 		// empty the table.
-		$wpdb->query( 'TRUNCATE TABLE `' . $wpdb->prefix . 'iufi_upload_logs`' );
+		$wpdb->query( 'TRUNCATE TABLE `' . $wpdb->prefix . 'iufi_logs`' );
 
 		// redirect user.
 		wp_safe_redirect( wp_get_referer() );
