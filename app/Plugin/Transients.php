@@ -59,7 +59,7 @@ class Transients {
 		add_filter( 'iufi_transient_hide_on', array( $this, 'set_default_pages_where_transients_are_hidden' ) );
 
 		// process AJAX-requests to dismiss transient notices.
-		add_action( 'wp_ajax_dismiss_admin_notice', array( $this, 'dismiss_transient_via_ajax' ) );
+		add_action( 'wp_ajax_iufi_dismiss_admin_notice', array( $this, 'dismiss_transient_via_ajax' ) );
 	}
 
 	/**
