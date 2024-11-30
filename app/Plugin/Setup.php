@@ -80,7 +80,7 @@ class Setup {
 			array(
 				'title_error' => __( 'Error', 'image-upload-for-imgur' ),
 				'txt_error_1' => __( 'The following error occurred:', 'image-upload-for-imgur' ),
-				'txt_error_2' => __( 'text after error', 'image-upload-for-imgur' ),
+				'txt_error_2' => '',
 			)
 		);
 		$setup_obj->set_config( $this->get_config() );

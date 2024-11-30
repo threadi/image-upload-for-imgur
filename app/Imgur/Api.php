@@ -128,7 +128,7 @@ class Api {
 		if ( empty( $images ) ) {
 			wp_send_json(
 				array(
-					'error' => __( 'No images successfully transferred to imgur.', 'image-upload-for-imgur' ),
+					'error' => __( 'No images successfully transferred to Imgur.', 'image-upload-for-imgur' ),
 				)
 			);
 			exit;
@@ -169,7 +169,7 @@ class Api {
 			$results = $client->api( 'image' )->upload( $image_data );
 		} catch ( \Exception $e ) {
 			// collect error in log.
-			Log::get_instance()->add_log( __( 'Error during upload of image to imgur: ', 'image-upload-for-imgur' ) . $e->getMessage(), 'error', 'system' );
+			Log::get_instance()->add_log( __( 'Error during upload of image to Imgur: ', 'image-upload-for-imgur' ) . $e->getMessage(), 'error', 'system' );
 		}
 
 		return $results;

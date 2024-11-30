@@ -6,7 +6,7 @@ Tested up to: 6.7
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 Upload images in Block Editor directly to Imgur.
 
@@ -48,3 +48,6 @@ The plugin can be installed even without Imgur account. However, it is not usabl
 
 = 1.0.2 =
 * Fixed transient handling and style
+
+= 1.0.3 =
+* Fixed typos
