@@ -610,7 +610,7 @@ class Settings {
 		if ( empty( $upload_result['link'] ) ) {
 			$transient_obj = Transients::get_instance()->add();
 			$transient_obj->set_name( 'iufi_credential_error' );
-			$transient_obj->set_message( __( '<strong>Error during test of your API credentials</strong> Please check your entered API key and credential.', 'image-upload-for-imgur' ) );
+			$transient_obj->set_message( __( '<strong>Error during test of your API credentials!</strong> Please check your entered API key and credential.', 'image-upload-for-imgur' ) );
 			$transient_obj->set_type( 'error' );
 			$transient_obj->save();
 		}
