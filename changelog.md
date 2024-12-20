@@ -12,6 +12,10 @@
 - Optimized Imgur spelling
 - Moved changelog to GitHub
 
+### Fixed
+
+- Fixed textdomain-notices in WordPress 6.7
+
 ## [1.0.3] - 30.11.2024
 
 ### Fixed

@@ -66,6 +66,15 @@ class Setup {
 	 * @return void
 	 */
 	public function init(): void {
+		add_action( 'init', array( $this, 'init_setup' ) );
+	}
+
+	/**
+	 * Initialize the setup-object.
+	 *
+	 * @return void
+	 */
+	public function init_setup(): void {
 		// check to show hint if setup should be run.
 		$this->show_hint();
 
