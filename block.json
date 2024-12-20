@@ -6,7 +6,7 @@
 	"title": "Image Upload via Imgur",
 	"category": "widgets",
 	"icon": "list-view",
-	"description": "Provides a Gutenberg block to upload an image to imgur via API.",
+	"description": "Provides a Gutenberg block to upload an image to Imgur via API.",
 	"keywords": [
 		"imgur",
 		"image"
