@@ -51,3 +51,6 @@ The plugin can be installed even without Imgur account. However, it is not usabl
 
 = 1.0.3 =
 * Fixed typos
+
+= 1.0.4 =
+* Optimized Imgur spelling
