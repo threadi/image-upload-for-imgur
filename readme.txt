@@ -2,7 +2,7 @@
 Contributors: threadi
 Tags: imgur, upload, image
 Requires at least: 5.9
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -39,7 +39,7 @@ The plugin can be installed even without Imgur account. However, it is not usabl
 
 == Changelog ==
 
-= 1.0.4 =
+= @@VersionNumber@@ =
 * Added GitHub action
 * Added this changelog
 * Optimized Imgur spelling
