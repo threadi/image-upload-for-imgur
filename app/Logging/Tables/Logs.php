@@ -21,7 +21,7 @@ class Logs extends WP_List_Table {
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table.
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 */
 	public function get_columns(): array {
 		return array(
@@ -35,7 +35,7 @@ class Logs extends WP_List_Table {
 	/**
 	 * Get the table data
 	 *
-	 * @return array
+	 * @return array<string,mixed>
 	 */
 	private function table_data(): array {
 		global $wpdb;
@@ -79,7 +79,7 @@ class Logs extends WP_List_Table {
 					'SELECT `state`, `time` AS `date`, `log`, `category`
             			FROM `' . $wpdb->prefix . 'iufi_logs`
                         WHERE 1 = %d ' . $where . '
-                        ORDER BY ' . esc_sql( $order_by ) . ' ASC',
+                        ORDER BY ' . (string) esc_sql( (string) $order_by ) . ' ASC',
 					$vars
 				),
 				ARRAY_A
@@ -90,7 +90,7 @@ class Logs extends WP_List_Table {
 				'SELECT `state`, `time` AS `date`, `log`, `category`
             			FROM `' . $wpdb->prefix . 'iufi_logs`
                         WHERE 1 = %d ' . $where . '
-                        ORDER BY ' . esc_sql( $order_by ) . ' DESC',
+                        ORDER BY ' . (string) esc_sql( (string) $order_by ) . ' DESC',
 				$vars
 			),
 			ARRAY_A
@@ -129,7 +129,7 @@ class Logs extends WP_List_Table {
 	/**
 	 * Define which columns are hidden
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 */
 	public function get_hidden_columns(): array {
 		return array();
@@ -138,7 +138,7 @@ class Logs extends WP_List_Table {
 	/**
 	 * Define the sortable columns
 	 *
-	 * @return array
+	 * @return array<string,mixed>
 	 */
 	public function get_sortable_columns(): array {
 		return array( 'date' => array( 'date', false ) );
@@ -147,8 +147,8 @@ class Logs extends WP_List_Table {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param  array  $item        Data.
-	 * @param  String $column_name - Current column name.
+	 * @param  array<string,mixed> $item        Data.
+	 * @param  String              $column_name - Current column name.
 	 *
 	 * @return string
 	 */
@@ -186,6 +186,7 @@ class Logs extends WP_List_Table {
 	 * Message to be displayed when there are no items.
 	 *
 	 * @since 1.0.0
+	 * @return void
 	 */
 	public function no_items(): void {
 		// get actual filter.
@@ -209,7 +210,7 @@ class Logs extends WP_List_Table {
 	/**
 	 * Define filter for categories.
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 */
 	protected function get_views(): array {
 		// get main url without filter.
@@ -234,7 +235,7 @@ class Logs extends WP_List_Table {
 		 * Filter the list before output.
 		 *
 		 * @since 1.0.0 Available since 1.0.0.
-		 * @param array $list List of filter.
+		 * @param array<string,string> $list List of filter.
 		 */
 		return apply_filters( 'iufi_table_filter', $list );
 	}

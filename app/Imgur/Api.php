@@ -33,7 +33,7 @@ class Api {
 	 *
 	 * @source: https://apidocs.imgur.com/#c85c9dfc-7487-4de2-9ecd-66f727cf3139
 	 *
-	 * @var array|string[]
+	 * @var array<int,string>
 	 */
 	private array $allowed_file_types = array( 'image/jpeg', 'image/jpg', 'image/gif', 'image/png', 'image/apng', 'image/tiff' );
 
@@ -78,7 +78,7 @@ class Api {
 					'error' => __( 'Imgur credentials missing.', 'image-upload-for-imgur' ),
 				)
 			);
-			exit;
+			exit; // @phpstan-ignore deadCode.unreachable
 		}
 
 		// get list of files from request.
@@ -94,7 +94,7 @@ class Api {
 					'error' => __( 'No files uploaded.', 'image-upload-for-imgur' ),
 				)
 			);
-			exit;
+			exit; // @phpstan-ignore deadCode.unreachable
 		}
 
 		// list of images we return.
@@ -131,7 +131,7 @@ class Api {
 					'error' => __( 'No images successfully transferred to Imgur.', 'image-upload-for-imgur' ),
 				)
 			);
-			exit;
+			exit; // @phpstan-ignore deadCode.unreachable
 		}
 
 		// return list of images with imgur-urls.
@@ -143,7 +143,7 @@ class Api {
 	 *
 	 * @param string $path_to_file The path of the file to use.
 	 *
-	 * @return array
+	 * @return array<string,mixed>
 	 */
 	public function add_file( string $path_to_file ): array {
 		// bail if setting is not completed.
@@ -178,7 +178,7 @@ class Api {
 	/**
 	 * Return allowed file types.
 	 *
-	 * @return array
+	 * @return array<int,string>
 	 */
 	public function get_allowed_file_types(): array {
 		return $this->allowed_file_types;

@@ -45,14 +45,14 @@ class Transient {
 	/**
 	 * Action-callback-array.
 	 *
-	 * @var array
+	 * @var array<int,mixed>
 	 */
 	private array $action = array();
 
 	/**
 	 * List of URLs where this transient should not be visible.
 	 *
-	 * @var array
+	 * @var array<int,string>
 	 */
 	private array $hide_on = array();
 
@@ -123,7 +123,7 @@ class Transient {
 	/**
 	 * Collect the entry for this transient.
 	 *
-	 * @return array
+	 * @return array<string,mixed>
 	 */
 	private function get_entry(): array {
 		return array(
@@ -206,7 +206,7 @@ class Transient {
 		if ( $this->has_action() ) {
 			$action = $this->get_action();
 			if ( method_exists( $action[0], $action[1] ) ) {
-				call_user_func( $action );
+				$action(); // @phpstan-ignore callable.nonCallable
 			}
 		}
 
@@ -321,7 +321,7 @@ class Transient {
 	/**
 	 * Return the defined action for this transient.
 	 *
-	 * @return array
+	 * @return array<int,mixed>
 	 */
 	private function get_action(): array {
 		return $this->action;
@@ -330,7 +330,7 @@ class Transient {
 	/**
 	 * Add an action to run. This is meant to be a callback as array like: array( 'class-name', 'function' );
 	 *
-	 * @param array $action The action as array.
+	 * @param array<int,mixed> $action The action as array.
 	 * @return void
 	 */
 	public function set_action( array $action ): void {
@@ -358,26 +358,26 @@ class Transient {
 	/**
 	 * Hide this transient on specified pages (its URLs).
 	 *
-	 * @return array
+	 * @return array<int,string>
 	 */
 	public function get_hide_on(): array {
-		$hide_on = $this->hide_on;
-
+		$hide_on  = $this->hide_on;
+		$instance = $this;
 		/**
 		 * Filter where a single transient should be hidden.
 		 *
 		 * @since 1.0.0 Available since 1.0.0.
 		 *
-		 * @param array $hide_on List of absolute URLs.
-		 * @param Transient $this The actual transient object.
+		 * @param array<int,string> $hide_on List of absolute URLs.
+		 * @param Transient $instance The actual transient object.
 		 */
-		return apply_filters( 'iufi_transient_hide_on', $hide_on, $this );
+		return apply_filters( 'iufi_transient_hide_on', $hide_on, $instance );
 	}
 
 	/**
 	 * Hide this transient on specified pages (its URLs).
 	 *
-	 * @param array $hide_on List of URLs where this transient should not be visible.
+	 * @param array<int,string> $hide_on List of URLs where this transient should not be visible.
 	 *
 	 * @return void
 	 */

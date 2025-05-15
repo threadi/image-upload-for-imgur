@@ -22,11 +22,11 @@ class FieldValidation {
 	 *
 	 * @param string $value The configured URL.
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 * @noinspection PhpUnused
 	 */
 	public static function rest_validate( string $value ): array {
-		if ( 0 === strlen( $value ) ) {
+		if ( '' === $value ) {
 			return array(
 				'error' => 'no_string_given',
 				'text'  => __( 'Please enter a valid value.', 'image-upload-for-imgur' ),

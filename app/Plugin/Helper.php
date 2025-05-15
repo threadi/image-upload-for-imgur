@@ -61,7 +61,7 @@ class Helper {
 	 */
 	public static function get_plugin_name(): string {
 		$plugin_data = get_plugin_data( IMAGE_UPLOAD_FOR_IMGUR_PLUGIN );
-		if ( ! empty( $plugin_data ) && ! empty( $plugin_data['Name'] ) ) {
+		if ( ! empty( $plugin_data['Name'] ) ) {
 			return $plugin_data['Name'];
 		}
 		return '';
@@ -87,6 +87,11 @@ class Helper {
 		}
 		if ( $object instanceof WP_Post ) {
 			$page_url = get_permalink( $object->ID );
+		}
+
+		// bail if no URL could be found.
+		if ( ! is_string( $page_url ) ) {
+			return '';
 		}
 
 		// return result.
@@ -131,7 +136,7 @@ class Helper {
 		// Case #4.
 		$rest_url    = wp_parse_url( trailingslashit( rest_url() ) );
 		$current_url = wp_parse_url( add_query_arg( array() ) );
-		if ( is_array( $current_url ) && isset( $current_url['path'] ) ) {
+		if ( is_array( $current_url ) && is_array( $rest_url ) && isset( $current_url['path'], $rest_url['path'] ) ) {
 			return str_starts_with( $current_url['path'], $rest_url['path'] );
 		}
 		return false;
@@ -168,14 +173,14 @@ class Helper {
 	/**
 	 * Get list of blogs in a multisite-installation.
 	 *
-	 * @return array
+	 * @return array<string,mixed>
 	 */
 	public static function get_blogs(): array {
 		if ( false === is_multisite() ) {
 			return array();
 		}
 
-		// Get DB-connection.
+		// get DB-connection.
 		global $wpdb;
 
 		// get blogs in this site-network.
@@ -216,7 +221,7 @@ class Helper {
 	public static function get_file_version( string $filepath ): string {
 		// check for WP_DEBUG.
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			return filemtime( $filepath );
+			return (string) filemtime( $filepath );
 		}
 
 		$plugin_version = IMAGE_UPLOAD_FOR_IMGUR_PLUGIN_VERSION;

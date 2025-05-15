@@ -3,6 +3,20 @@
 
 	<description>Imgur Image Upload Coding Standards</description>
 
+    <!--
+        Only scan files with .php extension.
+    -->
+    <arg name="extensions" value="php" />
+
+    <!--
+        Directories to exclude.
+    -->
+    <exclude-pattern>*/block/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/svn/*</exclude-pattern>
+    <exclude-pattern>*/releases/*</exclude-pattern>
+
 	<rule ref="WordPress-Docs"/>
 	<rule ref="WordPress-Extra"/>
     <rule ref="WordPress">
