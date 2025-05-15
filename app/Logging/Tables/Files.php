@@ -22,7 +22,7 @@ class Files extends WP_List_Table {
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table.
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 */
 	public function get_columns(): array {
 		return array(
@@ -37,7 +37,7 @@ class Files extends WP_List_Table {
 	/**
 	 * Get the table data
 	 *
-	 * @return array
+	 * @return array<string,mixed>
 	 */
 	private function table_data(): array {
 		global $wpdb;
@@ -67,7 +67,7 @@ class Files extends WP_List_Table {
 					'SELECT `time` AS `date`, `filename_original`, `imgur_url`, `post_id`, `user_id`
             			FROM `' . $wpdb->prefix . 'iufi_files`
                         WHERE 1 = %d ' . $where . '
-                        ORDER BY ' . esc_sql( $order_by ) . ' ASC',
+                        ORDER BY ' . (string) esc_sql( (string) $order_by ) . ' ASC',
 					$vars
 				),
 				ARRAY_A
@@ -78,7 +78,7 @@ class Files extends WP_List_Table {
 				'SELECT `time` AS `date`, `filename_original`, `imgur_url`, `post_id`, `user_id`
             			FROM `' . $wpdb->prefix . 'iufi_files`
                         WHERE 1 = %d ' . $where . '
-                        ORDER BY ' . esc_sql( $order_by ) . ' DESC',
+                        ORDER BY ' . (string) esc_sql( (string) $order_by ) . ' DESC',
 				$vars
 			),
 			ARRAY_A
@@ -117,7 +117,7 @@ class Files extends WP_List_Table {
 	/**
 	 * Define which columns are hidden
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 */
 	public function get_hidden_columns(): array {
 		return array();
@@ -126,7 +126,7 @@ class Files extends WP_List_Table {
 	/**
 	 * Define the sortable columns
 	 *
-	 * @return array
+	 * @return array<string,mixed>
 	 */
 	public function get_sortable_columns(): array {
 		return array( 'date' => array( 'date', false ) );
@@ -135,8 +135,8 @@ class Files extends WP_List_Table {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param  array  $item        Data.
-	 * @param  String $column_name - Current column name.
+	 * @param  array<string,mixed> $item        Data.
+	 * @param  String              $column_name - Current column name.
 	 *
 	 * @return string
 	 */
@@ -157,20 +157,6 @@ class Files extends WP_List_Table {
 	 * @since 1.0.0
 	 */
 	public function no_items(): void {
-		// get actual filter.
-		$category = $this->get_category_filter();
-
-		// if filter is set show other text.
-		if ( ! empty( $category ) ) {
-			// get all categories to get the title.
-			$categories = Log::get_instance()->get_categories();
-
-			// show text.
-			/* translators: %1$s will be replaced by the category name. */
-			printf( esc_html__( 'No files for %1$s found.', 'image-upload-for-imgur' ), esc_html( $categories[ $category ] ) );
-			return;
-		}
-
 		// show default text.
 		echo esc_html__( 'No files found.', 'image-upload-for-imgur' );
 	}
@@ -205,8 +191,14 @@ class Files extends WP_List_Table {
 			return '<i>' . __( 'Unknown', 'image-upload-for-imgur' ) . '</i>';
 		}
 
+		// get the URL.
+		$url = get_permalink( $post_id );
+		if ( ! $url ) {
+			return '';
+		}
+
 		// return the linked post title.
-		return '<a href="' . esc_url( get_permalink( $post_id ) ) . '" target="_blank">' . esc_html( get_post_field( 'post_title', $post_id ) ) . '</a>';
+		return '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_html( get_post_field( 'post_title', $post_id ) ) . '</a>';
 	}
 
 	/**

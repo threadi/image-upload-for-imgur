@@ -18,7 +18,7 @@ class Select {
 	/**
 	 * Get the output.
 	 *
-	 * @param array $attributes The settings for this field.
+	 * @param array<string,mixed> $attributes The settings for this field.
 	 *
 	 * @return void
 	 */
@@ -36,7 +36,7 @@ class Select {
 			// get title.
 			$title = '';
 			if ( isset( $attributes['title'] ) ) {
-				$title = $attributes['title'];
+				$title = (string) $attributes['title'];
 			}
 
 			// set readonly attribute.
@@ -46,13 +46,19 @@ class Select {
 				<?php
 			}
 
+			// get depends.
+			$depends = wp_json_encode( $attributes['depends'] );
+			if ( ! $depends ) {
+				$depends = '';
+			}
+
 			?>
 			<select id="<?php echo esc_attr( $attributes['fieldId'] ); ?>" name="
 									<?php
 									echo esc_attr( $attributes['fieldId'] );
 									echo isset( $attributes['multiple'] ) && false !== $attributes['multiple'] ? '[]' : '';
 									?>
-			" class="image-upload-for-imgur-field-width" title="<?php echo esc_attr( $title ); ?>"<?php echo isset( $attributes['readonly'] ) && false !== $attributes['readonly'] ? ' disabled="disabled"' : ''; ?><?php echo isset( $attributes['multiple'] ) && false !== $attributes['multiple'] ? ' multiple="multiple"' : ''; ?> data-depends="<?php echo esc_attr( wp_json_encode( $attributes['depends'] ) ); ?>">
+			" class="image-upload-for-imgur-field-width" title="<?php echo esc_attr( $title ); ?>"<?php echo isset( $attributes['readonly'] ) && false !== $attributes['readonly'] ? ' disabled="disabled"' : ''; ?><?php echo isset( $attributes['multiple'] ) && false !== $attributes['multiple'] ? ' multiple="multiple"' : ''; ?> data-depends="<?php echo esc_attr( $depends ); ?>">
 				<?php
 				if ( false === $attributes['hide_empty_option'] ) {
 					?>

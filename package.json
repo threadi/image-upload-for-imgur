@@ -1,6 +1,6 @@
 {
 	"name": "image-upload-for-imgur",
-	"version": "1.0.0",
+	"version": "1.0.5",
 	"description": "Provides a Gutenberg block to upload an image to Imgur via API.",
 	"author": "threadi",
 	"license": "GPL-2.0-or-later",

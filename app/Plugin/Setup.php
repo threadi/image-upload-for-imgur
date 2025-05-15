@@ -26,7 +26,7 @@ class Setup {
 	/**
 	 * Define setup as array with steps.
 	 *
-	 * @var array
+	 * @var array<int,array<string,mixed>>
 	 */
 	private array $setup = array();
 
@@ -53,11 +53,11 @@ class Setup {
 	 * Return the instance of this Singleton object.
 	 */
 	public static function get_instance(): Setup {
-		if ( ! static::$instance instanceof static ) {
-			static::$instance = new static();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return static::$instance;
+		return self::$instance;
 	}
 
 	/**
@@ -149,7 +149,7 @@ class Setup {
 	/**
 	 * Return the configured setup.
 	 *
-	 * @return array
+	 * @return array<int,array<string,mixed>>
 	 */
 	private function get_setup(): array {
 		$setup = $this->setup;
@@ -163,7 +163,7 @@ class Setup {
 		 *
 		 * @since 1.0.0 Available since 1.0.0.
 		 *
-		 * @param array $setup The setup-configuration.
+		 * @param array<int,array<string,mixed>> $setup The setup-configuration.
 		 */
 		return apply_filters( 'iufi_setup', $setup );
 	}
@@ -182,7 +182,7 @@ class Setup {
 	 *
 	 * Here we define which steps and texts are used by wp-easy-setup.
 	 *
-	 * @return array
+	 * @return array<string,mixed>
 	 */
 	private function get_config(): array {
 		// get setup.
@@ -202,7 +202,7 @@ class Setup {
 		 * Filter the setup configuration.
 		 *
 		 * @since 1.0.0 Available since 1.0.0.
-		 * @param array $config List of configuration for the setup.
+		 * @param array<string,mixed> $config List of configuration for the setup.
 		 */
 		return apply_filters( 'iufi_setup_config', $config );
 	}

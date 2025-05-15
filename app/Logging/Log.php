@@ -75,7 +75,7 @@ class Log {
             UNIQUE KEY id (id)
         ) $charset_collate;";
 
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php'; // @phpstan-ignore requireOnce.fileNotFound
 		dbDelta( $sql );
 	}
 
@@ -143,14 +143,14 @@ class Log {
 		$wpdb->query( 'TRUNCATE TABLE `' . $wpdb->prefix . 'iufi_logs`' );
 
 		// redirect user.
-		wp_safe_redirect( wp_get_referer() );
+		wp_safe_redirect( (string) wp_get_referer() );
 		exit;
 	}
 
 	/**
 	 * Return list of categories with internal name & its label.
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 */
 	public function get_categories(): array {
 		$list = array(

@@ -81,7 +81,7 @@ class Files {
             UNIQUE KEY id (id)
         ) $charset_collate;";
 
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php'; // @phpstan-ignore requireOnce.fileNotFound
 		dbDelta( $sql );
 	}
 
@@ -122,9 +122,9 @@ class Files {
 	/**
 	 * Add via API uploaded file to file log.
 	 *
-	 * @param array $file_original The original file data.
-	 * @param array $imgur_file    The imgur file data.
-	 * @param int   $post_id The used post id.
+	 * @param array<string,string> $file_original The original file data.
+	 * @param array<string,string> $imgur_file    The imgur file data.
+	 * @param int                  $post_id The used post id.
 	 *
 	 * @return void
 	 */
@@ -132,7 +132,7 @@ class Files {
 		// get current user.
 		$user    = wp_get_current_user();
 		$user_id = 0;
-		if ( ! is_null( $user ) ) {
+		if ( ! is_null( $user ) ) { // @phpstan-ignore function.impossibleType
 			$user_id = $user->ID;
 		}
 

@@ -41,24 +41,24 @@ class Settings {
 	 * Return the instance of this Singleton object.
 	 */
 	public static function get_instance(): Settings {
-		if ( ! static::$instance instanceof static ) {
-			static::$instance = new static();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return static::$instance;
+		return self::$instance;
 	}
 
 	/**
 	 * Variable for complete settings.
 	 *
-	 * @var array
+	 * @var array<string,array<string,mixed>>
 	 */
 	private array $settings = array();
 
 	/**
 	 * Variable for tab settings.
 	 *
-	 * @var array
+	 * @var array<int,array<string,mixed>>
 	 */
 	private array $tabs = array();
 
@@ -375,12 +375,7 @@ class Settings {
 			<nav class="nav-tab-wrapper">
 				<?php
 				foreach ( $this->get_tabs() as $tab_settings ) {
-					// bail if tab-settings are not an array.
-					if ( ! is_array( $tab_settings ) ) {
-						continue;
-					}
-
-					// Set url.
+					// set url.
 					$url    = Helper::get_settings_url( $tab_settings['key'] );
 					$target = '_self';
 					if ( ! empty( $tab_settings['url'] ) ) {
@@ -388,7 +383,7 @@ class Settings {
 						$target = $tab_settings['url_target'];
 					}
 
-					// Set class for tab and page for form-view.
+					// set class for tab and page for form-view.
 					$class = '';
 					if ( ! empty( $tab_settings['class'] ) ) {
 						$class .= ' ' . $tab_settings['class'];
@@ -447,7 +442,7 @@ class Settings {
 	/**
 	 * Return the settings and save them on the object.
 	 *
-	 * @return array
+	 * @return array<string,array<string,mixed>>
 	 */
 	public function get_settings(): array {
 		$settings = $this->settings;
@@ -457,7 +452,7 @@ class Settings {
 		 *
 		 * @since 1.0.0 Available since 1.0.0
 		 *
-		 * @param array $settings The settings as array.
+		 * @param array<string,array<string,mixed>> $settings The settings as array.
 		 */
 		$this->settings = apply_filters( 'iufi_settings', $settings );
 
@@ -479,7 +474,7 @@ class Settings {
 	/**
 	 * Return the tabs for the settings page.
 	 *
-	 * @return array
+	 * @return array<int,array<string,mixed>>
 	 */
 	public function get_tabs(): array {
 		$tabs = $this->tabs;
@@ -488,7 +483,7 @@ class Settings {
 		 *
 		 * @since 1.0.0 Available since 1.0.0
 		 *
-		 * @param array $false Set true to hide the buttons.
+		 * @param array<int,array<string,mixed>> $tabs List of tabs.
 		 */
 		$tabs = apply_filters( 'iufi_settings_tabs', $tabs );
 
@@ -502,8 +497,8 @@ class Settings {
 	/**
 	 * Sort the tabs by 'order'-field.
 	 *
-	 * @param array $a Tab 1 to check.
-	 * @param array $b Tab 2 to compare with tab 1.
+	 * @param array<string,int> $a Tab 1 to check.
+	 * @param array<string,int> $b Tab 2 to compare with tab 1.
 	 *
 	 * @return int
 	 */
@@ -571,7 +566,7 @@ class Settings {
 		if ( current_user_can( 'manage_options' ) ) {
 			// if WP_List_Table is not loaded automatically, we need to load it.
 			if ( ! class_exists( 'WP_List_Table' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
+				require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php'; // @phpstan-ignore requireOnce.fileNotFound
 			}
 			$log = new Logs();
 			$log->prepare_items();
@@ -639,7 +634,7 @@ class Settings {
 		if ( current_user_can( 'manage_options' ) ) {
 			// if WP_List_Table is not loaded automatically, we need to load it.
 			if ( ! class_exists( 'WP_List_Table' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
+				require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php'; // @phpstan-ignore requireOnce.fileNotFound
 			}
 			$log = new Files();
 			$log->prepare_items();
@@ -658,10 +653,10 @@ class Settings {
 	/**
 	 * Return settings for single field.
 	 *
-	 * @param string $field The requested field.
-	 * @param array  $settings The settings to use.
+	 * @param string                            $field The requested field.
+	 * @param array<string,array<string,mixed>> $settings The settings to use.
 	 *
-	 * @return array
+	 * @return array<string,array<string,mixed>>
 	 */
 	public function get_settings_for_field( string $field, array $settings = array() ): array {
 		foreach ( ( empty( $settings ) ? $this->get_settings() : $settings ) as $section_settings ) {

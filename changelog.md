@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.5] - 15.05.2025
+
+### Added
+
+- Added check with PHPStan to reduce potential PHP-errors
+
+### Fixed
+
+- Fixed PHP-fatal error on file table
+- Fixed some typos
+
 ## [1.0.4] - 20.12.2024
 
 ### Added

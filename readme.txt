@@ -40,9 +40,8 @@ The plugin can be installed even without Imgur account. However, it is not usabl
 == Changelog ==
 
 = @@VersionNumber@@ =
-* Added GitHub action
-* Added this changelog
-* Optimized Imgur spelling
-* Moved changelog to GitHub
+- Added check with PHPStan to reduce potential PHP-errors
+- Fixed PHP-fatal error on file table
+- Fixed some typos
 
 [older changes](https://github.com/threadi/image-upload-for-imgur/blob/master/changelog.md)
