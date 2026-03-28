@@ -49,7 +49,7 @@ class Files extends WP_List_Table {
 		}
 		$order = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		if ( ! is_null( $order ) ) {
-			$order = sanitize_sql_orderby( $order );
+			$order = sanitize_sql_orderby( (string) $order );
 		} else {
 			$order = 'ASC';
 		}
@@ -198,7 +198,11 @@ class Files extends WP_List_Table {
 		}
 
 		// return the linked post title.
-		return '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_html( get_post_field( 'post_title', $post_id ) ) . '</a>';
+		$title = get_post_field( 'post_title', $post_id );
+		if ( ! is_string( $title ) ) {
+			return '';
+		}
+		return '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_html( $title ) . '</a>';
 	}
 
 	/**

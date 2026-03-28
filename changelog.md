@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.6] - 28.03.2026
+
+### Changed
+
+- Optimized block components for future versions of WordPress
+- Set compatibility with WordPress 7.0
+- Optimized compatibility with actual WordPress Coding Standards
+- Updated dependencies
+
 ## [1.0.5] - 15.05.2025
 
 ### Added
