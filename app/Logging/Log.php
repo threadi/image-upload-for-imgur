@@ -86,7 +86,7 @@ class Log {
 	 */
 	public function delete_table(): void {
 		global $wpdb;
-		$wpdb->query( sprintf( 'DROP TABLE IF EXISTS %s', esc_sql( $wpdb->prefix . 'iufi_logs' ) ) );
+		$wpdb->query( sprintf( 'DROP TABLE IF EXISTS %s', (string) esc_sql( $wpdb->prefix . 'iufi_logs' ) ) );
 	}
 
 	/**
@@ -124,7 +124,7 @@ class Log {
 		global $wpdb;
 
 		// delete entries older than 7 days.
-		$wpdb->query( sprintf( 'DELETE FROM %s WHERE `time` < DATE_SUB(NOW(), INTERVAL 7 DAY)', esc_sql( $wpdb->prefix . 'iufi_logs' ) ) );
+		$wpdb->query( sprintf( 'DELETE FROM %s WHERE `time` < DATE_SUB(NOW(), INTERVAL 7 DAY)', (string) esc_sql( $wpdb->prefix . 'iufi_logs' ) ) );
 	}
 
 	/**
@@ -148,7 +148,7 @@ class Log {
 	}
 
 	/**
-	 * Return list of categories with internal name & its label.
+	 * Return list of categories with the internal name & its label.
 	 *
 	 * @return array<string,string>
 	 */

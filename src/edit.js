@@ -147,6 +147,7 @@ export default function Edit( object ) {
 					multiple={1 === iufi_allow_multiple_files}
 					onChange={(event) => {handleImagesUpload(event.target.files) }	}
           className={"button"}
+          __next40pxDefaultSize
 				>
 					{__( 'Choose files to upload', 'image-upload-for-imgur' )}
 				</FormFileUpload>

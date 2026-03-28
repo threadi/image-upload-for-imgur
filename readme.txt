@@ -2,7 +2,7 @@
 Contributors: threadi
 Tags: imgur, upload, image
 Requires at least: 5.9
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -40,8 +40,9 @@ The plugin can be installed even without Imgur account. However, it is not usabl
 == Changelog ==
 
 = @@VersionNumber@@ =
-- Added check with PHPStan to reduce potential PHP-errors
-- Fixed PHP-fatal error on file table
-- Fixed some typos
+- Optimized block components for future versions of WordPress
+- Set compatibility with WordPress 7.0
+- Optimized compatibility with actual WordPress Coding Standards
+- Updated dependencies
 
 [older changes](https://github.com/threadi/image-upload-for-imgur/blob/master/changelog.md)
