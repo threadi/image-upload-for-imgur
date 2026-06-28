@@ -40,9 +40,6 @@ The plugin can be installed even without Imgur account. However, it is not usabl
 == Changelog ==
 
 = @@VersionNumber@@ =
-- Optimized block components for future versions of WordPress
-- Set compatibility with WordPress 7.0
-- Optimized compatibility with actual WordPress Coding Standards
 - Updated dependencies
 
 [older changes](https://github.com/threadi/image-upload-for-imgur/blob/master/changelog.md)

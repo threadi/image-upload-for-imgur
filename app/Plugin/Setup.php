@@ -92,6 +92,7 @@ class Setup {
 				'txt_error_2' => '',
 			)
 		);
+		$setup_obj->set_display_hook( 'settings_page_iufi_settings' );
 		$setup_obj->set_config( $this->get_config() );
 
 		// only load setup if it is not completed.
