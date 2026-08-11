@@ -2,7 +2,7 @@
 Contributors: threadi
 Tags: imgur, upload, image
 Requires at least: 5.9
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -11,6 +11,8 @@ Stable tag: @@VersionNumber@@
 Upload images in Block Editor directly to Imgur.
 
 == Description ==
+
+**Unfortunately, it is no longer possible to register new apps with Imgur. As a result, it is also no longer possible to use this plugin. If you have any questions about this, please contact Imgur Support. (As of August 2026)**
 
 Upload images in Block Editor directly to Imgur. You need [API credentials](https://api.imgur.com/oauth2/addclient) from Imgur to use this plugin.
 
