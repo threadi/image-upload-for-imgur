@@ -34,10 +34,12 @@ const { useEffect } = wp.element;
  */
 export default function Edit( object ) {
 
-	// secure id of this block
-	useEffect(() => {
-		object.setAttributes({blockId: object.clientId});
-	});
+  // secure ID of this block
+  useEffect( () => {
+    if ( ! object.attributes.blockId ) {
+      object.setAttributes( { blockId: object.clientId } );
+    }
+  }, [ object.attributes.blockId, object.clientId ] );
 
   // get setting for multiple files.
   const iufi_allow_multiple_files = useSelect(
